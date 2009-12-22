@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+`mkdir -p ~/.vim/backup ~/.vim/tmp`
+
 Dir['.*'].each do |f| 
   next if ['.', '..', '.git'].include?(f) 
   # Don't deal with overwriting existing files for now 
