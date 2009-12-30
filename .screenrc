@@ -1,0 +1,22 @@
+
+# General
+defutf8 on
+defflow off
+vbell off
+autodetach on
+startup_message off
+
+# 256 colors
+term xterm
+attrcolor b ".I"
+termcapinfo xterm 'Co#256:AB=\E[38;5;%dm'
+defbce "on"
+
+shell -$SHELL
+
+# Status line
+hardstatus on
+hardstatus alwaysignore
+hardstatus alwayslastline
+hardstatus string '%{Yk}%-w%{.Yk}%n %t%{-}%+w %=%{.w} %{kY}%C'
+
