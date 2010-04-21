@@ -26,6 +26,7 @@ set t_Co=256
 
 "map <F5> :!ruby %<CR>
 noremap ,e :!ruby %<CR>
+noremap ,w :w!<CR>
 
 
 " Load matchit (% to bounce from do to end, etc.)
