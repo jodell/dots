@@ -24,9 +24,11 @@ set incsearch
 set term=ansi
 set t_Co=256
 
+" Key Mappings
 "map <F5> :!ruby %<CR>
 noremap ,e :!ruby %<CR>
 noremap ,w :w!<CR>
+noremap ,x :x!<CR>
 
 
 " Load matchit (% to bounce from do to end, etc.)
