@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 
-`mkdir -p ~/.vim/backup ~/.vim/tmp`
+dirs = %w(
+  ~/.vim/backup
+  ~/.vim/tmp
+  ~/.vim/colors
+)
+
+dirs.each { |dir| `mkdir -p #{dir}` }
 
 Dir['.*'].each do |f| 
   next if ['.', '..', '.git'].include?(f) 
