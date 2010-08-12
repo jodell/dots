@@ -18,3 +18,7 @@ end
 pwd = File.dirname(File.expand_path(__FILE__))
 # hack
 `ln -sf #{pwd}/../inkpot/colors/inkpot.vim ~/.vim/colors/inkpot.vim`
+
+# SSH config
+
+`ln -sf #{pwd}/ssh.config ~/.ssh/config`
