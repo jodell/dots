@@ -1,3 +1,3 @@
-= Dotfiles
+# Dotfiles
 
 Don't use this
