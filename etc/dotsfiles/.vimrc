@@ -29,7 +29,14 @@ set t_Co=256
 noremap ,e :!ruby %<CR>
 noremap ,w :w!<CR>
 noremap ,x :x!<CR>
+noremap ,q :qa<CR>
+noremap ,g :!!<CR>
 
+" NERD Tree
+"noremap t :NERDTreeToggle
+noremap ,t :execute 'NERDTreeToggle'<CR> 
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
 
 " Load matchit (% to bounce from do to end, etc.)
 runtime! macros/matchit.vim
@@ -50,6 +57,11 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 "improve autocomplete menu color
 highlight Pmenu ctermbg=238 gui=bold
 
+augroup mkd
+  autocmd BufRead *.mkd,*.md  set ai formatoptions=tcroqn2 comments=n:&gt;
+augroup END
+
+
 " Map ctrl-j to escape for more home row action!
 :imap <C-j> <Esc>
 
@@ -66,7 +78,9 @@ set foldlevel=100
 au BufWinLeave * mkview " Automatically load/save folding views
 au BufWinEnter * silent loadview
 
-" NERD Tree
-"noremap t :NERDTreeToggle
-noremap ,t :execute 'NERDTreeToggle'<CR>
- 
+
+" Highlight > 80 cols
+" http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
