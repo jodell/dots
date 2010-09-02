@@ -1,0 +1,11 @@
+# rvm
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+
+# History 
+# NOTE: Why isn't histappend enabled by default?!
+export HISTCONTROL=erasedups
+export HISTSIZE=10000
+shopt -s histappend
+
+# This may need an OS check
+. ~/.bashrc
