@@ -7,12 +7,15 @@ dirs = %w(
 )
 
 dirs.each { |dir| `mkdir -p #{dir}` }
-
-Dir['.*'].each do |f| 
-  next if ['.', '..', '.git'].include?(f) 
+pwd = File.expand_path(File.dirname(__FILE__))
+dotfiles_dir = "#{pwd}/etc/dotsfiles"
+puts "In dir: #{pwd}"
+Dir["#{dotfiles_dir}/.*"].each do |f| 
+  next if ['/.', '/..'].map { |s| dotfiles_dir + s }.include?(f) 
+  puts "Linking file #{f}"
   # Don't deal with overwriting existing files for now 
-  next if File.exists?(File.expand_path("~/#{File.basename(f)}"))
-  `ln -s #{File.expand_path(f)} ~/#{File.basename(f)}`
+  #next if File.exists?(File.expand_path("~/#{File.basename(f)}"))
+  `ln -sf #{File.expand_path(f)} ~/#{File.basename(f)}`
 end
 
 pwd = File.dirname(File.expand_path(__FILE__))
