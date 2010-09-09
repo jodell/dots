@@ -1,0 +1,9 @@
+[submodule "vendor/inkpot"]
+	path = vendor/inkpot
+	url = git://github.com/ciaranm/inkpot.git
+[submodule "vendor/nerdtree"]
+	path = vendor/nerdtree
+	url = git://github.com/scrooloose/nerdtree.git
+[submodule "vendor/cucumber"]
+	path = vendor/cucumber
+	url = git://github.com/jodell/vim-cucumber.git
