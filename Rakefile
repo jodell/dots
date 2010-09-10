@@ -6,6 +6,9 @@ task :go do
   sh './bin/linkify.rb'
 end
 
+desc 'Sync out submodules'
+task :reup => [:'git:sub:init', :'git:sub:update']
+
 namespace 'git' do
   desc 'add relevant submodules'
   task :'sub:add' do
