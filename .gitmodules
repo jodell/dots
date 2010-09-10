@@ -10,3 +10,6 @@
 [submodule "vendor/pathogen"]
 	path = vendor/pathogen
 	url = git://github.com/tpope/vim-pathogen.git
+[submodule "vendor/vim-ruby"]
+	path = vendor/vim-ruby
+	url = git://github.com/vim-ruby/vim-ruby.git

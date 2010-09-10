@@ -7,6 +7,7 @@ task :go do
 end
 
 namespace 'git' do
+  desc 'add relevant submodules'
   task :'sub:add' do
     {
       'vendor/cucumber' => 'git://github.com/jodell/vim-cucumber.git',
@@ -18,4 +19,15 @@ namespace 'git' do
       sh "git submodule add #{repo} #{path}"
     end
   end
+
+  desc 'init submodules'
+  task :'sub:init' do
+    sh 'git submodule init'
+  end
+
+  desc 'update all submodules'
+  task :'sub:update' do
+    sh 'git submodule update --recursive'
+  end
+
 end
