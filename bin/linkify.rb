@@ -35,3 +35,7 @@ pwd = File.dirname(File.expand_path(__FILE__))
 
 # vim-ruby
 `cd #{pwd}/../vendor/vim-ruby && bin/vim-ruby-install.rb -d ~/.vim`
+
+# supertab
+`cd #{pwd}/../vendor/supertab && ln -sf #{pwd}/../vendor/supertab/plugin/supertab.vim ~/.vim/plugin`
+`cd #{pwd}/../vendor/supertab && ln -sf #{pwd}/../vendor/supertab/doc/supertab.txt ~/.vim/doc`

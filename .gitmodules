@@ -16,3 +16,6 @@
 [submodule "vendor/supertab"]
 	path = vendor/supertab
 	url = git://github.com/ervandew/supertab.git
+[submodule "vendor/fuzzyfinder_textmate"]
+	path = vendor/fuzzyfinder_textmate
+	url = git://github.com/sethbc/fuzzyfinder_textmate.git
