@@ -9,7 +9,7 @@ dirs = %w(
 dirs.each { |dir| `mkdir -p #{dir}` }
 pwd = File.expand_path(File.dirname(__FILE__))
 dotfiles_dir = "#{pwd}/etc/dotsfiles"
-puts "In dir: #{pwd}"
+
 Dir["#{dotfiles_dir}/.*"].each do |f| 
   next if ['/.', '/..'].map { |s| dotfiles_dir + s }.include?(f) 
   puts "Linking file #{f}"
@@ -19,9 +19,15 @@ Dir["#{dotfiles_dir}/.*"].each do |f|
 end
 
 pwd = File.dirname(File.expand_path(__FILE__))
-# hack
-`ln -sf #{pwd}/../inkpot/colors/inkpot.vim ~/.vim/colors/inkpot.vim`
+
+# Inkpot
+`ln -sf #{pwd}/../vendor/inkpot/colors/inkpot.vim ~/.vim/colors/inkpot.vim`
+
+# NERD Tree
+`cd #{pwd}/../vendor/nerdtree && rake install`
+
+# Cucumber
+`cd #{pwd}/../vendor/cucumber && rake install`
 
 # SSH config
-
-`ln -sf #{pwd}/ssh.config ~/.ssh/config`
+`ln -sf #{pwd}/../etc/ssh/ssh.config ~/.ssh/config`
