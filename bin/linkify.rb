@@ -20,6 +20,10 @@ end
 
 pwd = File.dirname(File.expand_path(__FILE__))
 
+# SSH config
+`ln -sf #{pwd}/../etc/ssh/ssh.config ~/.ssh/config`
+
+###### VIM PLUGINS ######
 # Inkpot
 `ln -sf #{pwd}/../vendor/inkpot/colors/inkpot.vim ~/.vim/colors/inkpot.vim`
 
@@ -29,5 +33,5 @@ pwd = File.dirname(File.expand_path(__FILE__))
 # Cucumber
 `cd #{pwd}/../vendor/cucumber && rake install`
 
-# SSH config
-`ln -sf #{pwd}/../etc/ssh/ssh.config ~/.ssh/config`
+# vim-ruby
+`cd #{pwd}/../vendor/vim-ruby && bin/vim-ruby-install.rb`
