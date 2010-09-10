@@ -34,4 +34,4 @@ pwd = File.dirname(File.expand_path(__FILE__))
 `cd #{pwd}/../vendor/cucumber && rake install`
 
 # vim-ruby
-`cd #{pwd}/../vendor/vim-ruby && bin/vim-ruby-install.rb`
+`cd #{pwd}/../vendor/vim-ruby && bin/vim-ruby-install.rb -d ~/.vim`
