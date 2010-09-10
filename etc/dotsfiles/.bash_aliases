@@ -7,4 +7,4 @@ alias dots="cd ~/git/dotsfiles"
 alias rgrep="grep -r"
 
 # centro
-. ~/.centro_aliases
+[[ -e ~/.centro_aliases ]] && . ~/.centro_aliases
