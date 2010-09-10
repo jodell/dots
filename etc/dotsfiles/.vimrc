@@ -31,6 +31,9 @@ noremap ,w :w!<CR>
 noremap ,x :x!<CR>
 noremap ,q :qa<CR>
 noremap ,g :!!<CR>
+noremap ,c :!cucumber %<CR>
+noremap ,r :!rake %<CR>
+noremap ,, :!! %<CR>
 
 " NERD Tree
 "noremap t :NERDTreeToggle
