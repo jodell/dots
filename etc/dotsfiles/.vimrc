@@ -31,7 +31,7 @@ noremap ,w :w!<CR>
 noremap ,x :x!<CR>
 noremap ,q :qa<CR>
 noremap ,g :!!<CR>
-noremap ,c :!cucumber %<CR>
+noremap ,c :!cucumber --format pretty %<CR>
 noremap ,r :!rake %<CR>
 noremap ,, :!! %<CR>
 
