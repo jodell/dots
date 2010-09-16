@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+puts "Linking dotfiles..."
 dirs = %w(
   ~/.vim/backup
   ~/.vim/tmp
@@ -8,7 +9,7 @@ dirs = %w(
 
 dirs.each { |dir| `mkdir -p #{dir}` }
 pwd = File.expand_path(File.dirname(__FILE__))
-dotfiles_dir = "#{pwd}/etc/dotsfiles"
+dotfiles_dir = "#{pwd}/../etc/dotsfiles"
 
 Dir["#{dotfiles_dir}/.*"].each do |f| 
   next if ['/.', '/..'].map { |s| dotfiles_dir + s }.include?(f) 

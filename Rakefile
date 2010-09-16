@@ -1,5 +1,5 @@
 
-task :default => :go
+task :default => [:reup, :go]
 
 desc 'Create links'
 task :go do
@@ -32,5 +32,4 @@ namespace 'git' do
   task :'sub:update' do
     sh 'git submodule update --recursive'
   end
-
 end
