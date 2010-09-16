@@ -7,5 +7,8 @@ alias dots="cd ~/git/dotsfiles"
 alias rgrep="grep -r"
 alias ffp='/Applications/Firefox.app/Contents/MacOS/firefox-bin -profilemanager'
 
+# SO META
+alias realias='. ~/.bash_aliases'
+
 # centro
-[[ -e ~/.centro_aliases ]] && . ~/.centro_aliases
+[[ -e ~/.bash_aliases.centro ]] && . ~/.bash_aliases.centro
