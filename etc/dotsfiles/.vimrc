@@ -78,8 +78,8 @@ set foldenable
 set foldmethod=syntax
 set foldlevel=100
 
-au BufWinLeave * mkview " Automatically load/save folding views
-au BufWinEnter * silent loadview
+au BufWinLeave * silent! mkview " Automatically load/save folding views
+au BufWinEnter * silent! loadview
 
 
 " Highlight > 80 cols
