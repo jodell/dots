@@ -19,3 +19,6 @@
 [submodule "vendor/fuzzyfinder_textmate"]
 	path = vendor/fuzzyfinder_textmate
 	url = git://github.com/sethbc/fuzzyfinder_textmate.git
+[submodule "vendor/git-vim"]
+	path = vendor/git-vim
+	url = git://github.com/motemen/git-vim.git

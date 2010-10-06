@@ -24,9 +24,14 @@ set ruler
 set hlsearch
 set incsearch
 
+" File name, git branch, and line & col position
+set laststatus=2
+set statusline=%F\ <%{GitBranch()}>\ %l,%v
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Mappings
-" 
+"
+let mapleader = ","
 noremap ,e :!ruby %<CR>
 noremap ,w :w!<CR>
 noremap ,x :x!<CR>
@@ -36,16 +41,15 @@ noremap ,r :!rake %<CR>
 noremap ,g :!!<CR>
 noremap ,, :!! %<CR>
 " Run the cucumber scenario under the cursor <3
-noremap ,f :execute "!cucumber --format pretty %:".line('.')
+noremap ,f :execute "!cucumber --format pretty %:".line('.')<CR>
 
-" NERD Tree
+" NERd Tree
 noremap ,t :execute 'NERDTreeToggle'<CR> 
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 
 " Map ctrl-j to escape for more home row action!
 :imap <C-j> <Esc>
-
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Filetypes - Move Me
