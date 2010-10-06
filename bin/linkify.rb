@@ -24,7 +24,10 @@ pwd = File.dirname(File.expand_path(__FILE__))
 # SSH config
 `ln -sf #{pwd}/../etc/ssh/ssh.config ~/.ssh/config`
 
-###### VIM PLUGINS ######
+################################################################################
+# VIM Plugins
+#
+# TODO: Use pathogen
 # Inkpot
 `ln -sf #{pwd}/../vendor/inkpot/colors/inkpot.vim ~/.vim/colors/inkpot.vim`
 
@@ -38,5 +41,14 @@ pwd = File.dirname(File.expand_path(__FILE__))
 `cd #{pwd}/../vendor/vim-ruby && bin/vim-ruby-install.rb -d ~/.vim`
 
 # supertab
-`cd #{pwd}/../vendor/supertab && ln -sf #{pwd}/../vendor/supertab/plugin/supertab.vim ~/.vim/plugin`
-`cd #{pwd}/../vendor/supertab && ln -sf #{pwd}/../vendor/supertab/doc/supertab.txt ~/.vim/doc`
+`ln -sf #{pwd}/../vendor/supertab/plugin/supertab.vim ~/.vim/plugin`
+`ln -sf #{pwd}/../vendor/supertab/doc/supertab.txt ~/.vim/doc`
+
+# git-vim
+`ln -sf #{pwd}/../vendor/git-vim/plugin/git.vim ~/.vim/plugin`
+`ln -sf #{pwd}/../vendor/git-vim/syntax/git-diff.vim ~/.vim/syntax`
+`ln -sf #{pwd}/../vendor/git-vim/syntax/git-log.vim ~/.vim/syntax`
+`ln -sf #{pwd}/../vendor/git-vim/syntax/git-status.vim ~/.vim/syntax`
+
+# gist-vim
+`ln -sf #{pwd}/../vendor/gist-vim/plugin/gist.vim ~/.vim/plugin`

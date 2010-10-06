@@ -10,3 +10,6 @@
 
 [apply]
   whitespace = fix
+
+[github]
+  user = jodell
