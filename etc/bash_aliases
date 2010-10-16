@@ -2,6 +2,7 @@ alias ll='ls -l'
 alias la='ls -a'
 alias l='ls -CF'
 alias h='history'
+alias r='rake'
 alias go="cd ~/git"
 alias dots="cd ~/git/dotsfiles"
 alias rgrep="grep -r"

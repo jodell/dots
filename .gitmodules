@@ -25,3 +25,6 @@
 [submodule "vendor/gist-vim"]
 	path = vendor/gist-vim
 	url = git://github.com/mattn/gist-vim.git
+[submodule "vendor/cocoa.vim"]
+	path = vendor/cocoa.vim
+	url = http://github.com/msanders/cocoa.vim.git
