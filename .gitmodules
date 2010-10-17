@@ -28,3 +28,6 @@
 [submodule "vendor/cocoa.vim"]
 	path = vendor/cocoa.vim
 	url = http://github.com/msanders/cocoa.vim.git
+[submodule "vendor/snipmate.vim"]
+	path = vendor/snipmate.vim
+	url = git://github.com/msanders/snipmate.vim.git

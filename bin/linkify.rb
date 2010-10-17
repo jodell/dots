@@ -52,3 +52,11 @@ pwd = File.dirname(File.expand_path(__FILE__))
 
 # gist-vim
 `ln -sf #{pwd}/../vendor/gist-vim/plugin/gist.vim ~/.vim/plugin`
+
+# cocoa.vim
+`cd #{pwd}/../vendor/cocoa.vim && cp -r . ~/.vim`
+
+# snipmate.vim
+`cd #{pwd}/../vendor/snipmate.vim && cp -r . ~/.vim`
+
+
