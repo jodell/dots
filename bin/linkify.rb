@@ -24,6 +24,8 @@ pwd = File.dirname(File.expand_path(__FILE__))
 # SSH config
 `ln -sf #{pwd}/../etc/ssh/ssh.config ~/.ssh/config`
 
+`mkdir -p ~/.vim/doc ~/.vim/syntax ~/.vim/plugin`
+
 ################################################################################
 # VIM Plugins
 #
