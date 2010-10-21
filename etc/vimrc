@@ -36,10 +36,10 @@ noremap ,e :!ruby %<CR>
 noremap ,w :w!<CR>
 noremap ,x :x!<CR>
 noremap ,q :qa<CR>
-noremap ,c :!cucumber --format pretty %<CR>
 noremap ,r :!rake %<CR>
-noremap ,g :!!<CR>
-noremap ,, :!! %<CR>
+noremap ,, :!!<CR>
+noremap ,c <C-w>c<CR>
+"noremap ,c :!cucumber --format pretty %<CR>
 " Run the cucumber scenario under the cursor <3
 noremap ,f :execute "!cucumber --format pretty %:".line('.')<CR>
 
