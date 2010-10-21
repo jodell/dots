@@ -9,3 +9,5 @@ shopt -s histappend
 
 # This may need an OS check
 . ~/.bashrc
+
+export EDITOR=/usr/bin/vim
