@@ -13,3 +13,5 @@
 
 [github]
   user = jodell
+[branch]
+	autosetupmerge = true
