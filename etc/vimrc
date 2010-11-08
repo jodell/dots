@@ -32,21 +32,27 @@ set statusline=%F\ <%{GitBranch()}>\ %l,%v
 " Key Mappings
 "
 let mapleader = ","
-noremap ,e :!ruby %<CR>
-noremap ,w :w!<CR>
-noremap ,x :x!<CR>
-noremap ,q :qa<CR>
-noremap ,r :!rake %<CR>
-noremap ,, :!!<CR>
-noremap ,c <C-w>c<CR>
+noremap <Leader>e :!ruby %<CR>
+noremap <Leader>w :w!<CR>
+noremap <Leader>x :x!<CR>
+noremap <Leader>q :qa<CR>
+noremap <Leader>r :!rake %<CR>
+noremap <Leader>, :!!<CR>
+noremap <Leader>c <C-w>c<CR>
 "noremap ,c :!cucumber --format pretty %<CR>
 " Run the cucumber scenario under the cursor <3
-noremap ,f :execute "!cucumber --format pretty %:".line('.')<CR>
+noremap <Leader>f :execute "!cucumber --format pretty %:".line('.')<CR>
 
 " NERd Tree
-noremap ,t :execute 'NERDTreeToggle'<CR> 
+noremap <Leader>t :execute 'NERDTreeToggle'<CR> 
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
+
+" Dict - scrumtrilescent!
+noremap <Leader>s :execute "!dict <cword>"<CR>
+
+" Source this file
+noremap <Leader>v :source ~/.vimrc<CR>
 
 " Map ctrl-j to escape for more home row action!
 :imap <C-j> <Esc>
