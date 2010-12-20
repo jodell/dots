@@ -1,0 +1,9 @@
+set go=-T
+set go+=c
+set gfn=Monaco:h12
+
+if &background == "dark"
+  hi normal guibg=black
+endif
+
+colors koehler
