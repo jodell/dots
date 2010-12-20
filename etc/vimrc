@@ -5,8 +5,11 @@
 " Colors
 syntax on
 colors inkpot
-set term=ansi
+set term=xterm-color
 set t_Co=256
+set bg=dark
+
+call pathogen#runtime_append_all_bundles()
 
 filetype plugin indent on " Enable filetype-specific indenting and plugins
 set backspace=indent,eol,start
@@ -24,6 +27,9 @@ set ruler
 set hlsearch
 set incsearch
 
+set cpoptions+=n
+set showbreak=↳\ 
+
 " File name, git branch, and line & col position
 set laststatus=2
 set statusline=%F\ <%{GitBranch()}>\ %l,%v
@@ -39,9 +45,11 @@ noremap <Leader>q :qa<CR>
 noremap <Leader>r :!rake %<CR>
 noremap <Leader>, :!!<CR>
 noremap <Leader>c <C-w>c<CR>
+noremap <leader>s :set list!<CR>
+
 "noremap ,c :!cucumber --format pretty %<CR>
 " Run the cucumber scenario under the cursor <3
-noremap <Leader>f :execute "!cucumber --format pretty %:".line('.')<CR>
+noremap <Leader>f :execute "!bundle exec cucumber --format pretty %:".line('.')<CR>
 
 " NERd Tree
 noremap <Leader>t :execute 'NERDTreeToggle'<CR> 
@@ -49,7 +57,7 @@ autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 
 " Dict - scrumtrilescent!
-noremap <Leader>s :execute "!dict <cword>"<CR>
+noremap <Leader>d :execute "!dict <cword>"<CR>
 
 " Source this file
 noremap <Leader>v :source ~/.vimrc<CR>
@@ -74,6 +82,10 @@ autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+
+" change to the working directory of open buffer unless in /tmp
+"autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | lcd %:p:h | endif
+
 "improve autocomplete menu color
 highlight Pmenu ctermbg=238 gui=bold
 augroup mkd
@@ -99,13 +111,15 @@ au BufWinEnter * silent! loadview
 "
 " Highlight > 80 cols
 " http://stackoverflow.com/questions/235439/vim-80-column-layout-concerns
-if has("colorcolumn")
-  set colorcolumn=80
-else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
+"if has("colorcolumn")
+"  set colorcolumn=80
+"else
+"  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+"endif
 
 " gist-vim
 let g:gist_clip_command = 'pbcopy'
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
+
+let g:SuperTabDefaultCompletionType = "context"
