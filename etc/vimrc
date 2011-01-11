@@ -5,7 +5,7 @@
 " Colors
 syntax on
 colors inkpot
-set term=xterm-color
+"set term=xterm-color
 set t_Co=256
 set bg=dark
 
@@ -24,8 +24,12 @@ set scrolloff=10  " keep 10 lines above and below position
 set showcmd
 set showmatch
 set ruler
+
+" Searching
 set hlsearch
 set incsearch
+set ignorecase
+set smartcase
 
 set cpoptions+=n
 set showbreak=↳\ 
@@ -38,11 +42,19 @@ set statusline=%F\ <%{GitBranch()}>\ %l,%v
 " Key Mappings
 "
 let mapleader = ","
-noremap <Leader>e :!ruby %<CR>
+
+" Opens a tab edit command with the path of the currently edited file filled in
+noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+" Opens a tab edit command with the path of the currently edited file filled in
+" Normal mode: <Leader>t
+noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
+
+noremap <Leader>r :!ruby %<CR>
 noremap <Leader>w :w!<CR>
 noremap <Leader>x :x!<CR>
 noremap <Leader>q :qa<CR>
-noremap <Leader>r :!rake %<CR>
+noremap <Leader>ra :!rake %<CR>
 noremap <Leader>, :!!<CR>
 noremap <Leader>c <C-w>c<CR>
 noremap <leader>s :set list!<CR>
@@ -98,6 +110,9 @@ set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
 
+" Marks
+set viminfo='100,f1
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
 set foldenable
@@ -121,5 +136,29 @@ au BufWinEnter * silent! loadview
 let g:gist_clip_command = 'pbcopy'
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
-
 let g:SuperTabDefaultCompletionType = "context"
+
+" Include user's local vim config
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
+
+if has("gui")
+  set go=-T " Remove toolbar
+  set go+=c
+  set gfn=Monaco:h12
+  set visualbell
+  
+  if &background == "dark"
+    hi normal guibg=black
+  endif
+  
+  colors koehler
+  
+  set mousehide " Hide the mouse when typing text
+  
+  " Include user's local vim config
+  if filereadable(expand("~/.gvimrc.local"))
+    source ~/.gvimrc.local
+  endif
+endif
