@@ -13,7 +13,8 @@ shopt -s histappend
 export EDITOR=/usr/bin/vim
 
 # Enable git completion and handy functions like __git_ps1
-[[ -s /usr/local/etc/bash_completion.d/git-completion.bash ]] && . /usr/local/etc/bash_completion.d/git-completion.bash
+[[ -s "/usr/local/etc/bash_completion.d/git-completion.bash" ]] && . "/usr/local/etc/bash_completion.d/git-completion.bash"
+[[ -s "/etc/bash_completion.d/git" ]] && . "/etc/bash_completion.d/git"
 
 # Prompt
 export PS1="[\h:\w\$(__git_ps1)] \u$ "

@@ -9,7 +9,7 @@ colors inkpot
 set t_Co=256
 set bg=dark
 
-call pathogen#runtime_append_all_bundles()
+"call pathogen#runtime_append_all_bundles()
 
 filetype plugin indent on " Enable filetype-specific indenting and plugins
 set backspace=indent,eol,start
