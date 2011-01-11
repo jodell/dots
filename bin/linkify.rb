@@ -1,13 +1,13 @@
 #!/usr/bin/env ruby
 
 puts "Linking dotfiles..."
-dirs = %w(
-  ~/.vim/backup
-  ~/.vim/tmp
-  ~/.vim/colors
-)
+dirs = %w(backup tmp colors doc syntax plugin ftdetect ftplugin).map do |dir| 
+  "~/.vim/#{dir}"
+end * ' '
 
-dirs.each { |dir| `mkdir -p #{dir}` }
+puts "mkdir -p #{dirs}"
+system "mkdir -p #{dirs}"
+
 pwd = File.expand_path(File.dirname(__FILE__))
 dotfiles_dir = "#{pwd}/../etc"
 
@@ -23,8 +23,6 @@ pwd = File.dirname(File.expand_path(__FILE__))
 
 # SSH config
 `ln -sf #{pwd}/../etc/ssh/ssh.config ~/.ssh/config`
-
-`mkdir -p ~/.vim/doc ~/.vim/syntax ~/.vim/plugin`
 
 ################################################################################
 # VIM Plugins
@@ -56,9 +54,16 @@ pwd = File.dirname(File.expand_path(__FILE__))
 `ln -sf #{pwd}/../vendor/gist-vim/plugin/gist.vim ~/.vim/plugin`
 
 # cocoa.vim
-`cd #{pwd}/../vendor/cocoa.vim && cp -r . ~/.vim`
+`cd #{pwd}/../vendor/cocoa.vim && cp -R . ~/.vim`
 
 # snipmate.vim
-`cd #{pwd}/../vendor/snipmate.vim && cp -r . ~/.vim`
+`cd #{pwd}/../vendor/snipmate.vim && cp -R . ~/.vim`
+
+# vim-coffee-script
+`ln -sf #{pwd}/../vendor/vim-coffee-script/ftdetect/coffee.vim ~/.vim/ftdetect`
+`ln -sf #{pwd}/../vendor/vim-coffee-script/ftplugin/coffee.vim ~/.vim/ftplugin`
+`ln -sf #{pwd}/../vendor/vim-coffee-script/indent/coffee.vim ~/.vim/indent`
+`ln -sf #{pwd}/../vendor/vim-coffee-script/syntax/coffee.vim ~/.vim/syntax`
+
 
 
