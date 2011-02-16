@@ -58,6 +58,8 @@ noremap <Leader>ra :!rake %<CR>
 noremap <Leader>, :!!<CR>
 noremap <Leader>c <C-w>c<CR>
 noremap <leader>s :set list!<CR>
+noremap <leader>m :!markdown < %:p > /tmp/`basename %`.html; open file:///tmp/`basename %`.html<CR>
+noremap <leader>g :FuzzyFinderFile<CR>
 
 "noremap ,c :!cucumber --format pretty %<CR>
 " Run the cucumber scenario under the cursor <3

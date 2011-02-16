@@ -7,6 +7,8 @@
 
 [core]
   whitespace = trailing-space,space-before-tab
+	autocrlf = input
+	safecrlf = true
 
 [apply]
   whitespace = fix
@@ -16,7 +18,9 @@
 [branch]
   autosetupmerge = true
 [alias]
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --no-merges
+  lgm = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   co = checkout
   s = status
   d = diff
+  b = branch

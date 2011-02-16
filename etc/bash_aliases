@@ -10,6 +10,23 @@ alias ffp='/Applications/Firefox.app/Contents/MacOS/firefox-bin -profilemanager'
 
 # SO META
 alias realias='. ~/.bash_aliases'
+alias rebash='. ~/.bashrc'
 
-# centro
-[[ -e ~/.bash_aliases.centro ]] && . ~/.bash_aliases.centro
+# git
+alias gs='git s'
+alias gd='git d'
+alias ga='git add'
+alias gco='git co'
+alias gb='git b'
+alias gdx='git diff | ~/Downloads/GitX.app/Contents/Resources/gitx'
+
+function git_current_branch() {
+  git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///'
+}
+
+alias gpthis='git push origin HEAD:$(git_current_branch)'
+alias grb='git rebase -p'
+alias gup='git fetch origin && grb origin/$(git_current_branch)'
+alias gm='git merge --no-ff'
+
+[[ -e ~/.bash_aliases.local ]] && . ~/.bash_aliases.local
