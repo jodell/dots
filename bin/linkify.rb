@@ -21,8 +21,11 @@ end
 
 pwd = File.dirname(File.expand_path(__FILE__))
 
+# FIXME: Fix these hardcoded symlinks
+#
 # SSH config
 `ln -sf #{pwd}/../etc/ssh/ssh.config ~/.ssh/config`
+`ln -sf #{pwd}/../etc/ssh/rc ~/.ssh/rc`
 
 ################################################################################
 # VIM Plugins
