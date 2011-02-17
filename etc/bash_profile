@@ -1,5 +1,9 @@
 # rvm
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
+  . "$HOME/.rvm/scripts/rvm" 
+  # Favor Brew
+  export PATH="$HOME/.rvm/rubies/ruby-1.8.7-p299/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql84/bin:/usr/local/bin:/usr/local:$PATH"
+fi
 
 # History 
 # NOTE: Why isn't histappend enabled by default?!
@@ -7,16 +11,12 @@ export HISTCONTROL=erasedups
 export HISTSIZE=10000
 shopt -s histappend
 
-# This may need an OS check
-. ~/.bashrc
-
-export EDITOR=/usr/bin/vim
 
 # Enable git completion and handy functions like __git_ps1
 [[ -s "/usr/local/etc/bash_completion.d/git-completion.bash" ]] && . "/usr/local/etc/bash_completion.d/git-completion.bash"
 [[ -s "/etc/bash_completion.d/git" ]] && . "/etc/bash_completion.d/git"
+[[ -s "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
 
 # Prompt
 export PS1="[\h:\w\$(__git_ps1)] \u$ "
-
 export LANG=en_US.UTF-8
