@@ -1,72 +1,48 @@
 #!/usr/bin/env ruby
+pwd = File.expand_path(File.dirname(__FILE__))
 
 puts "Linking dotfiles..."
-dirs = %w(backup tmp colors doc syntax plugin ftdetect ftplugin).map do |dir| 
-  "~/.vim/#{dir}"
-end * ' '
 
-puts "mkdir -p #{dirs}"
-system "mkdir -p #{dirs}"
-
-pwd = File.expand_path(File.dirname(__FILE__))
 dotfiles_dir = "#{pwd}/../etc"
 
 Dir["#{dotfiles_dir}/*"].each do |f| 
-  next if ['/.', '/..'].map { |s| dotfiles_dir + s }.include?(f) || File.directory?(f)
-  puts "Linking file #{f}"
-  # Don't deal with overwriting existing files for now 
-  #next if File.exists?(File.expand_path("~/#{File.basename(f)}"))
+  next if File.directory?(f)
   `ln -sf #{File.expand_path(f)} ~/.#{File.basename(f)}`
 end
 
-pwd = File.dirname(File.expand_path(__FILE__))
-
-# FIXME: Fix these hardcoded symlinks
-#
 # SSH config
-`ln -sf #{pwd}/../etc/ssh/ssh.config ~/.ssh/config`
-`ln -sf #{pwd}/../etc/ssh/rc ~/.ssh/rc`
+Dir["#{dotfiles_dir}/ssh/*"].each do |f|
+  `ln -sf #{File.expand_path(f)} ~/.ssh/#{File.basename(f)}` 
+end
 
-################################################################################
-# VIM Plugins
-#
-# TODO: Use pathogen
+#################################################################################
+# VIM
+dirs = %w(
+autoload
+backup
+tmp
+colors
+bundle
+).map { |dir| "~/.vim/#{dir}" } * ' '
+system "mkdir -p #{dirs}"
+
+# Pathogen setup
+`cp #{pwd}/../vendor/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim`
+
+%w(
+gist-vim
+vim-ruby
+nerdtree
+snipmate.vim
+cucumber
+cocoa.vim
+supertab
+git-vim
+vim-json
+vim-coffee-script
+).each do |plugin|
+  `ln -sf #{pwd}/../vendor/#{plugin} ~/.vim/bundle/#{plugin}`
+end
+
 # Inkpot
 `ln -sf #{pwd}/../vendor/inkpot/colors/inkpot.vim ~/.vim/colors/inkpot.vim`
-
-# NERD Tree
-`cd #{pwd}/../vendor/nerdtree && rake install`
-
-# Cucumber
-`cd #{pwd}/../vendor/cucumber && rake install`
-
-# vim-ruby
-`cd #{pwd}/../vendor/vim-ruby && bin/vim-ruby-install.rb -d ~/.vim`
-
-# supertab
-`ln -sf #{pwd}/../vendor/supertab/plugin/supertab.vim ~/.vim/plugin`
-`ln -sf #{pwd}/../vendor/supertab/doc/supertab.txt ~/.vim/doc`
-
-# git-vim
-`ln -sf #{pwd}/../vendor/git-vim/plugin/git.vim ~/.vim/plugin`
-`ln -sf #{pwd}/../vendor/git-vim/syntax/git-diff.vim ~/.vim/syntax`
-`ln -sf #{pwd}/../vendor/git-vim/syntax/git-log.vim ~/.vim/syntax`
-`ln -sf #{pwd}/../vendor/git-vim/syntax/git-status.vim ~/.vim/syntax`
-
-# gist-vim
-`ln -sf #{pwd}/../vendor/gist-vim/plugin/gist.vim ~/.vim/plugin`
-
-# cocoa.vim
-`cd #{pwd}/../vendor/cocoa.vim && cp -R . ~/.vim`
-
-# snipmate.vim
-`cd #{pwd}/../vendor/snipmate.vim && cp -R . ~/.vim`
-
-# vim-coffee-script
-`ln -sf #{pwd}/../vendor/vim-coffee-script/ftdetect/coffee.vim ~/.vim/ftdetect`
-`ln -sf #{pwd}/../vendor/vim-coffee-script/ftplugin/coffee.vim ~/.vim/ftplugin`
-`ln -sf #{pwd}/../vendor/vim-coffee-script/indent/coffee.vim ~/.vim/indent`
-`ln -sf #{pwd}/../vendor/vim-coffee-script/syntax/coffee.vim ~/.vim/syntax`
-
-
-

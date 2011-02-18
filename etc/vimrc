@@ -1,3 +1,9 @@
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Pathogen needs to be setup first
+"
+filetype off
+call pathogen#helptags()
+call pathogen#runtime_append_all_bundles()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Basic Setup
@@ -164,3 +170,5 @@ if has("gui")
     source ~/.gvimrc.local
   endif
 endif
+
+

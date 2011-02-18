@@ -7,9 +7,6 @@
 [submodule "vendor/cucumber"]
 	path = vendor/cucumber
 	url = git://github.com/jodell/vim-cucumber.git
-[submodule "vendor/pathogen"]
-	path = vendor/pathogen
-	url = git://github.com/tpope/vim-pathogen.git
 [submodule "vendor/vim-ruby"]
 	path = vendor/vim-ruby
 	url = git://github.com/vim-ruby/vim-ruby.git
@@ -34,3 +31,9 @@
 [submodule "vendor/vim-coffee-script"]
 	path = vendor/vim-coffee-script
 	url = git://github.com/kchmck/vim-coffee-script.git
+[submodule "vendor/vim-json"]
+	path = vendor/vim-json
+	url = https://github.com/leshill/vim-json.git
+[submodule "vendor/vim-pathogen"]
+	path = vendor/vim-pathogen
+	url = https://github.com/tpope/vim-pathogen.git
