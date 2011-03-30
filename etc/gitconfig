@@ -7,20 +7,48 @@
 
 [core]
   whitespace = trailing-space,space-before-tab
-	autocrlf = input
-	safecrlf = true
+  autocrlf = input
+  safecrlf = true
+  excludesfile = ~/.gitignore_global
 
 [apply]
   whitespace = fix
 
 [github]
   user = jodell
+
 [branch]
   autosetupmerge = true
+
 [alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --no-merges
   lgm = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   co = checkout
   s = status
   d = diff
+  ds = diff --name-status
   b = branch
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
+
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
