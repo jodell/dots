@@ -8,6 +8,8 @@ alias dots="cd ~/git/dotsfiles"
 alias rgrep="grep -r"
 alias ffp='/Applications/Firefox.app/Contents/MacOS/firefox-bin -profilemanager'
 
+alias less='less -XLR'
+
 # SO META
 alias realias='. ~/.bash_aliases'
 alias rebash='. ~/.bashrc'
@@ -28,5 +30,6 @@ alias gpthis='git push origin HEAD:$(git_current_branch)'
 alias grb='git rebase -p'
 alias gup='git fetch origin && grb origin/$(git_current_branch)'
 alias gm='git merge --no-ff'
+alias disk='du -d 1 -h'
 
 [[ -e ~/.bash_aliases.local ]] && . ~/.bash_aliases.local
