@@ -17,6 +17,10 @@ shopt -s histappend
 [[ -s "/etc/bash_completion.d/git" ]] && . "/etc/bash_completion.d/git"
 [[ -s "$HOME/.bashrc" ]] && . "$HOME/.bashrc"
 
+# Completions
+complete -C ~/.bash/completion/rake_completion -o default rake
+complete -C ~/.bash/completion/project_completion -o default c
+
 # Prompt
 export PS1="[\h:\w\$(__git_ps1)] \u$ "
 export LANG=en_US.UTF-8

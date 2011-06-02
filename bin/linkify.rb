@@ -15,6 +15,9 @@ Dir["#{dotfiles_dir}/ssh/*"].each do |f|
   `ln -sf #{File.expand_path(f)} ~/.ssh/#{File.basename(f)}` 
 end
 
+# Bash Completion
+`ln -sf #{File.expand_path(dotfiles_dir + '/bash')} ~/.bash`
+
 #################################################################################
 # VIM
 dirs = %w(

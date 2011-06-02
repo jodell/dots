@@ -19,12 +19,12 @@ set bg=dark
 
 filetype plugin indent on " Enable filetype-specific indenting and plugins
 set backspace=indent,eol,start
-set nocompatible          
+set nocompatible
 set sw=2 sts=2 et ai
 set whichwrap=b,s,h,l
 set wildmenu
 set wildmode=list:longest
-"set list
+set list listchars=tab:\ \ ,trail:·
 set nostartofline " restart at last cursor position - YAY!
 set scrolloff=10  " keep 10 lines above and below position
 set showcmd
@@ -38,7 +38,7 @@ set ignorecase
 set smartcase
 
 set cpoptions+=n
-set showbreak=↳\ 
+set showbreak=↳\\
 
 " File name, git branch, and line & col position
 set laststatus=2
@@ -156,19 +156,17 @@ if has("gui")
   set go+=c
   set gfn=Monaco:h12
   set visualbell
-  
+
   if &background == "dark"
     hi normal guibg=black
   endif
-  
+
   colors koehler
-  
+
   set mousehide " Hide the mouse when typing text
-  
+
   " Include user's local vim config
   if filereadable(expand("~/.gvimrc.local"))
     source ~/.gvimrc.local
   endif
 endif
-
-
