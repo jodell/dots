@@ -37,3 +37,9 @@
 [submodule "vendor/vim-pathogen"]
 	path = vendor/vim-pathogen
 	url = https://github.com/tpope/vim-pathogen.git
+[submodule "vendor/mustache.vim"]
+	path = vendor/mustache.vim
+	url = git://github.com/juvenn/mustache.vim.git
+[submodule "vendor/vim-handlebars"]
+	path = vendor/vim-handlebars
+	url = git://github.com/nono/vim-handlebars.git
