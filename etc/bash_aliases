@@ -32,5 +32,6 @@ alias gup='git fetch origin && grb origin/$(git_current_branch)'
 alias gm='git merge --no-ff'
 alias disk='du -d 1 -h'
 alias h='heroku'
+alias brake='bundle exec rake'
 
 [[ -e ~/.bash_aliases.local ]] && . ~/.bash_aliases.local

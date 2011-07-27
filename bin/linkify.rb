@@ -43,6 +43,8 @@ supertab
 git-vim
 vim-json
 vim-coffee-script
+vim-handlebars
+mustache.vim
 ).each do |plugin|
   `ln -sf #{pwd}/../vendor/#{plugin} ~/.vim/bundle/#{plugin}`
 end
