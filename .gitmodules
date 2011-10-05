@@ -43,3 +43,6 @@
 [submodule "vendor/vim-handlebars"]
 	path = vendor/vim-handlebars
 	url = git://github.com/nono/vim-handlebars.git
+[submodule "vendor/vim-clojure"]
+	path = vendor/vim-clojure
+	url = git://github.com/vim-scripts/VimClojure.git
