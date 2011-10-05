@@ -63,9 +63,13 @@ noremap <Leader>q :qa<CR>
 noremap <Leader>ra :!rake %<CR>
 noremap <Leader>, :!!<CR>
 noremap <Leader>c <C-w>c<CR>
+"noremap <Leader>a :<Leader>A<CR>
 noremap <leader>s :set list!<CR>
 noremap <leader>m :!markdown < %:p > /tmp/`basename %`.html; open file:///tmp/`basename %`.html<CR>
 noremap <leader>g :FuzzyFinderFile<CR>
+map <F5> :%s/<\([^>]\)*>/\r&\r/g<enter>:g/^$/d<enter>vat=
+map <F8> vatJxvito<right><left>x
+map <F7> /\v^\s*([a-zA-Z\-0-9\$])<enter>qm<F6>nq@q1000@@:1<enter>
 
 "noremap ,c :!cucumber --format pretty %<CR>
 " Run the cucumber scenario under the cursor <3
@@ -103,6 +107,10 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
+"clojure"
+let vimclojure#HighlightBuiltins = 1
+let vimclojure#ParenRainbow = 1
+
 " change to the working directory of open buffer unless in /tmp
 "autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | lcd %:p:h | endif
 
@@ -117,6 +125,11 @@ augroup END
 set backup
 set backupdir=~/.vim/backup
 set directory=~/.vim/tmp
+
+if $VIM_CRONTAB == "true"
+  set nobackup
+  set nowritebackup
+endif
 
 " Marks
 set viminfo='100,f1

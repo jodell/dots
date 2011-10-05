@@ -20,3 +20,45 @@ hardstatus alwayslastline
 hardstatus string '%{Yk}%-w%{.Yk}%n %t%{-}%+w %=%{.w} %{kY}%C'
 
 setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+
+# Reclaim readline ^A
+escape ^U^U
+
+# Borrowed from http://forum.soft32.com/linux/GNU-screen-ctrl-cumbersom-ftopict474956.html:
+
+# Function key 1 k1 stuff \033OP 
+bindkey -k k1 help 
+# Function key 2 k2 stuff \033OQ 
+bindkey -k k2 select 
+# Function key 3 k3 stuff \033OR 
+bindkey -k k3 next 
+# Function key 4 k4 stuff \033OS 
+bindkey -k k4 prev 
+# 
+# ---- 
+# 
+# Function key 5 k5 stuff \033[15~ 
+bindkey -k k5 colon 
+# Function key 6 k6 stuff \033[17~ 
+bindkey -k k6 log 
+# Function key 7 k7 stuff \033[18~ 
+bindkey -k k7 screen 
+# Function key 8 k8 stuff \033[19~ 
+bindkey -k k8 detach 
+# 
+# ---- 
+# 
+# Function key 9 k9 stuff \033[20~ 
+bindkey -k k9 focus 
+# Function key 10 k; stuff \033[21~ 
+bindkey -k k; remove 
+# Function key 11 F1 stuff \033[23~ 
+bindkey -k F1 split 
+# Function key 12 F2 stuff \033[24~ 
+bindkey -k F2 windowlist -b 
+# 
+# ---- 
+# 
+# Home kh stuff \033[1~ 
+# End kH stuff \033[4~ 
+

@@ -20,6 +20,7 @@ alias gd='git d'
 alias ga='git add'
 alias gco='git co'
 alias gb='git b'
+alias gdh='git diff HEAD'
 alias gdx='git diff | ~/Downloads/GitX.app/Contents/Resources/gitx'
 
 function git_current_branch() {
@@ -33,5 +34,8 @@ alias gm='git merge --no-ff'
 alias disk='du -d 1 -h'
 alias h='heroku'
 alias brake='bundle exec rake'
+alias be='bundle exec'
+
+alias crontab='VIM_CRONTAB=true crontab'
 
 [[ -e ~/.bash_aliases.local ]] && . ~/.bash_aliases.local
