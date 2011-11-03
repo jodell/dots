@@ -1,6 +1,8 @@
+alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias l='ls -CF'
+alias tree='tree -C'
 alias h='history'
 alias r='rake'
 alias go="cd ~/git"
