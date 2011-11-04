@@ -1,4 +1,3 @@
-alias ls='ls --color=auto'
 alias ll='ls -l'
 alias la='ls -a'
 alias l='ls -CF'
@@ -24,6 +23,11 @@ alias gco='git co'
 alias gb='git b'
 alias gdh='git diff HEAD'
 alias gdx='git diff | ~/Downloads/GitX.app/Contents/Resources/gitx'
+
+# RHEL Aliases
+if [ -f /etc/redhat-release ]; then
+  alias ls='ls --color=auto'
+fi
 
 function git_current_branch() {
   git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///'
