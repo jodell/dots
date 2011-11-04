@@ -3,9 +3,11 @@ if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
   . "$HOME/.rvm/scripts/rvm" 
   # Favor Brew
   export PATH="$HOME/.rvm/rubies/ruby-1.8.7-p299/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql84/bin:/usr/local/bin:/usr/local:$PATH"
+elif [[ -s "/etc/profile.d/rvm.sh" ]]; then
+  . "/etc/profile.d/rvm.sh"
 fi
 
-# History 
+# History
 # NOTE: Why isn't histappend enabled by default?!
 export HISTCONTROL=erasedups
 export HISTSIZE=10000
@@ -24,3 +26,6 @@ complete -C ~/.bash/completion/project_completion -o default c
 # Prompt
 export PS1="[\h:\w\$(__git_ps1)] \u$ "
 export LANG=en_US.UTF-8
+
+# Aliases
+[[ -s "$HOME/.bash_aliases" ]] && . "$HOME/.bash_aliases"
