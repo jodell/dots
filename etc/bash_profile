@@ -7,6 +7,8 @@ elif [[ -s "/etc/profile.d/rvm.sh" ]]; then
   . "/etc/profile.d/rvm.sh"
 fi
 
+export PATH=~/bin:$PATH
+
 # History
 # NOTE: Why isn't histappend enabled by default?!
 export HISTCONTROL=erasedups

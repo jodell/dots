@@ -39,8 +39,13 @@ alias gup='git fetch origin && grb origin/$(git_current_branch)'
 alias gm='git merge --no-ff'
 alias disk='du -d 1 -h'
 alias h='heroku'
+
+# Bundler
+alias bi='bundle install --binstubs=.bin'
 alias brake='bundle exec rake'
 alias be='bundle exec'
+
+export PATH="./.bin:$PATH"
 
 alias crontab='VIM_CRONTAB=true crontab'
 
