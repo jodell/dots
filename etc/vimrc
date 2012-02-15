@@ -80,6 +80,9 @@ noremap <Leader>t :execute 'NERDTreeToggle'<CR>
 autocmd VimEnter * NERDTree
 autocmd VimEnter * wincmd p
 
+" Tags
+set tags=tags;$HOME
+
 " Dict - scrumtrilescent!
 noremap <Leader>d :execute "!dict <cword>"<CR>
 
@@ -134,6 +137,9 @@ endif
 " Marks
 set viminfo='100,f1
 
+" Shell like you mean it
+set shell=bash\ --login
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Folding
 set foldenable
@@ -183,3 +189,11 @@ if has("gui")
     source ~/.gvimrc.local
   endif
 endif
+
+" Match trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
