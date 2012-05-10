@@ -22,7 +22,7 @@ hardstatus string '%{Yk}%-w%{.Yk}%n %t%{-}%+w %=%{.w} %{kY}%C'
 setenv SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 
 # Reclaim readline ^A
-escape ^U^U
+escape ^J^J
 
 # Borrowed from http://forum.soft32.com/linux/GNU-screen-ctrl-cumbersom-ftopict474956.html:
 
