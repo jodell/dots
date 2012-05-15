@@ -17,8 +17,21 @@
 # list of available options, their meanings and defaults, please see the
 # ssh_config(5) man page.
 
- Host *
-   ForwardAgent yes
+Host *.transis.es
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+
+Host 184.106.*.*
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+
+Host *.amazonaws.com
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+
+Host *
+  ForwardAgent yes
+  SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
 #   ForwardX11 no
 #   RhostsRSAAuthentication no
 #   RSAAuthentication yes
@@ -46,3 +59,6 @@
 #   TunnelDevice any:any
 #   PermitLocalCommand no
 #   VisualHostKey no
+
+
+
