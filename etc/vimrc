@@ -44,6 +44,15 @@ set showbreak=↳\\
 set laststatus=2
 set statusline=%F\ <%{GitBranch()}>\ %l,%v
 
+" Strip trailing whitespace upon write
+autocmd BufWritePre *.{m,h,rb,js,coffee,scss,css,yml} call StripTrailingWhiteSpace()
+
+function! StripTrailingWhiteSpace()
+  let l:winview = winsaveview()
+  silent! %s/\s\+$//
+  call winrestview(l:winview)
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Key Mappings
 "
@@ -70,6 +79,9 @@ noremap <leader>g :FuzzyFinderFile<CR>
 map <F5> :%s/<\([^>]\)*>/\r&\r/g<enter>:g/^$/d<enter>vat=
 map <F8> vatJxvito<right><left>x
 map <F7> /\v^\s*([a-zA-Z\-0-9\$])<enter>qm<F6>nq@q1000@@:1<enter>
+
+" Strip trailing whitespace in the current buffer
+nnoremap <leader>p :call StripTrailingWhiteSpace()<CR>
 
 "noremap ,c :!cucumber --format pretty %<CR>
 " Run the cucumber scenario under the cursor <3
@@ -163,6 +175,8 @@ au BufWinEnter * silent! loadview
 let g:gist_clip_command = 'pbcopy'
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
+let g:github_token = $GITHUB_TOKEN
+
 let g:SuperTabDefaultCompletionType = "context"
 
 " Include user's local vim config
@@ -197,3 +211,7 @@ autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+
+
+" zucchini
+autocmd BufNewFile,BufReadPost *.zucchini set filetype=cucumber
