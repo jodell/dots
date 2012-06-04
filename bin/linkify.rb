@@ -5,17 +5,19 @@ puts "Linking dotfiles..."
 
 dotfiles_dir = "#{pwd}/../etc"
 
-Dir["#{dotfiles_dir}/*"].each do |f| 
+Dir["#{dotfiles_dir}/*"].each do |f|
   next if File.directory?(f)
-  `ln -sf #{File.expand_path(f)} ~/.#{File.basename(f)}`
+  `rm ~/.#{File.basename(f)}; ln -s #{File.expand_path(f)} ~/.#{File.basename(f)}`
 end
 
 # SSH config
 Dir["#{dotfiles_dir}/ssh/*"].each do |f|
-  `ln -sf #{File.expand_path(f)} ~/.ssh/#{File.basename(f)}` 
+  puts "Symlinking: ln -sf #{File.expand_path(f)} ~/.ssh/#{File.basename(f)}"
+  `rm ~/.ssh/#{File.basename(f)}; ln -s #{File.expand_path(f)} ~/.ssh/#{File.basename(f)}`
 end
 
 # Bash Completion
+puts "Symlinking: ln -sf #{File.expand_path(dotfiles_dir + '/bash')} ~/.bash"
 `ln -sf #{File.expand_path(dotfiles_dir + '/bash')} ~/.bash`
 
 #################################################################################
@@ -45,9 +47,12 @@ vim-json
 vim-coffee-script
 vim-handlebars
 vim-clojure
+vim-conque
 mustache.vim
+webapi-vim
 ).each do |plugin|
-  `ln -sf #{pwd}/../vendor/#{plugin} ~/.vim/bundle/#{plugin}`
+  puts "Symlinking: ln -sf #{pwd}/../vendor/#{plugin} ~/.vim/bundle/#{plugin}"
+  `rm ~/.vim/bundle/#{plugin}; ln -s #{pwd}/../vendor/#{plugin} ~/.vim/bundle/#{plugin}`
 end
 
 # Inkpot
