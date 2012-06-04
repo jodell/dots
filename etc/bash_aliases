@@ -22,6 +22,7 @@ alias ga='git add'
 alias gco='git co'
 alias gb='git b'
 alias gdh='git diff HEAD'
+alias gsh='git show HEAD'
 alias gdx='git diff | ~/Downloads/GitX.app/Contents/Resources/gitx'
 
 # RHEL Aliases
@@ -38,14 +39,16 @@ alias grb='git rebase -p'
 alias gup='git fetch origin && grb origin/$(git_current_branch)'
 alias gm='git merge --no-ff'
 alias disk='du -d 1 -h'
+
+# Heroku
 alias h='heroku'
+alias hlogs='heroku logs -t --app'
 
 # Bundler
-alias bi='bundle install --binstubs=.bin'
+alias bi='bundle install --binstubs=./.bin'
 alias brake='bundle exec rake'
-alias be='bundle exec'
+alias bx='bundle exec'
 
-export PATH="./.bin:$PATH"
 
 alias crontab='VIM_CRONTAB=true crontab'
 

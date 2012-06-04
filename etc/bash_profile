@@ -1,20 +1,18 @@
 # rvm
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-  . "$HOME/.rvm/scripts/rvm" 
+  . "$HOME/.rvm/scripts/rvm"
   # Favor Brew
-  export PATH="$HOME/.rvm/rubies/ruby-1.8.7-p299/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql84/bin:/usr/local/bin:/usr/local:$PATH"
+  export PATH="~/bin:/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH"
+  #export PATH="$HOME/.rvm/rubies/ruby-1.8.7-p299/bin:/usr/local/bin:/opt/local/lib/postgresql84/bin:/usr/local/bin:/usr/local:$PATH"
 elif [[ -s "/etc/profile.d/rvm.sh" ]]; then
   . "/etc/profile.d/rvm.sh"
 fi
-
-export PATH=~/bin:$PATH
 
 # History
 # NOTE: Why isn't histappend enabled by default?!
 export HISTCONTROL=erasedups
 export HISTSIZE=10000
 shopt -s histappend
-
 
 # Enable git completion and handy functions like __git_ps1
 [[ -s "/usr/local/etc/bash_completion.d/git-completion.bash" ]] && . "/usr/local/etc/bash_completion.d/git-completion.bash"
@@ -29,5 +27,10 @@ complete -C ~/.bash/completion/project_completion -o default c
 export PS1="[\h:\w\$(__git_ps1)] \u$ "
 export LANG=en_US.UTF-8
 
-# Aliases
-[[ -s "$HOME/.bash_aliases" ]] && . "$HOME/.bash_aliases"
+# Personal executables
+export PATH=$HOME/bin:$PATH
+
+# Bundler
+export PATH="./.bin:$PATH"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
