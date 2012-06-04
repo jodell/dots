@@ -49,3 +49,6 @@
 [submodule "vendor/vim-conque"]
 	path = vendor/vim-conque
 	url = git://github.com/rson/vim-conque.git
+[submodule "vendor/webapi-vim"]
+	path = vendor/webapi-vim
+	url = https://github.com/mattn/webapi-vim.git
