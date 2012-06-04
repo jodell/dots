@@ -18,7 +18,7 @@ end
 
 # Bash Completion
 puts "Symlinking: ln -sf #{File.expand_path(dotfiles_dir + '/bash')} ~/.bash"
-`ln -sf #{File.expand_path(dotfiles_dir + '/bash')} ~/.bash`
+`rm ~/.bash; ln -s #{File.expand_path(dotfiles_dir + '/bash')} ~/.bash`
 
 #################################################################################
 # VIM
@@ -47,6 +47,7 @@ vim-json
 vim-coffee-script
 vim-handlebars
 vim-clojure
+vim-pathogen
 vim-conque
 mustache.vim
 webapi-vim
@@ -56,4 +57,4 @@ webapi-vim
 end
 
 # Inkpot
-`ln -sf #{pwd}/../vendor/inkpot/colors/inkpot.vim ~/.vim/colors/inkpot.vim`
+`rm ~/.vim/colors/inkpot.vim; ln -s #{pwd}/../vendor/inkpot/colors/inkpot.vim ~/.vim/colors/inkpot.vim`
