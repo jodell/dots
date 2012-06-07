@@ -1,4 +1,2 @@
-git submodules for vim plugins
-vim plugin magic --alternative way to avoid .vim dir
-rename shit
-stop trying to find the last edit line in vim on new files
+git submodules for vim plugins [DONE]
+vim plugin magic --alternative way to avoid .vim dir [DONE: pathogen]
