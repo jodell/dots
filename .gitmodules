@@ -52,3 +52,6 @@
 [submodule "vendor/webapi-vim"]
 	path = vendor/webapi-vim
 	url = https://github.com/mattn/webapi-vim.git
+[submodule "vendor/ack.vim"]
+	path = vendor/ack.vim
+	url = git://github.com/mileszs/ack.vim.git
