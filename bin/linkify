@@ -1,0 +1,30 @@
+#!/bin/bash
+echo 'Linking dotfiles...'
+
+dots() {
+  for dot in etc/*; do # standard dots
+    test -d $dot && continue
+    ln -sf `pwd`/$dot ~/.`basename $dot`
+  done
+
+  # directories
+  for ssh in etc/ssh/*; do # ssh
+    ln -sf `pwd`/$ssh ~/.ssh/`basename $ssh`
+  done
+
+  test -L ~/.bash && rm ~/.bash; ln -s `pwd`/etc/bash ~/.bash
+}
+
+vim() {
+  echo 'Setting up VI'
+  mkdir -p ~/.vim/autload ~/.vim/backup ~/.vim/tmp ~/.vim/colors ~/.vim/bundle
+  cp vendor/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
+
+  for dir in vendor/*; do
+    test -L ~/.vim/bundle/`basename $dir` && rm ~/.vim/bundle/`basename $dir`
+    ln -s `pwd`/$dir ~/.vim/bundle/`basename $dir`
+  done
+}
+
+dots
+vim
