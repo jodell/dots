@@ -1,30 +1,42 @@
 #!/bin/bash
-echo 'Linking dotfiles...'
+self=`basename $0`
+pwd=`pwd`
 
 dots() {
-  for dot in etc/*; do # standard dots
+  echo 'Linking dotfiles...'
+  # standard dots
+  for dot in etc/*; do
     test -d $dot && continue
-    ln -sf `pwd`/$dot ~/.`basename $dot`
+    ln -sf $pwd/$dot ~/.`basename $dot`
   done
 
-  # directories
-  for ssh in etc/ssh/*; do # ssh
-    ln -sf `pwd`/$ssh ~/.ssh/`basename $ssh`
+  # ~/bin/*
+  for f in bin/*; do
+    [[ `basename $f` == $self ]] && continue # skip $0
+    ln -sf $pwd/$f ~/bin/`basename $f`
   done
 
-  test -L ~/.bash && rm ~/.bash; ln -s `pwd`/etc/bash ~/.bash
+  # ~/.ssh/*
+  for ssh in etc/ssh/*; do
+    ln -sf $pwd/$ssh ~/.ssh/`basename $ssh`
+  done
+
+  # ~/.bash/
+  test -L ~/.bash && rm ~/.bash
+  ln -s $pwd/etc/bash ~/.bash
 }
 
 vim() {
-  echo 'Setting up VI'
+  echo 'Setting up VIM'
   mkdir -p ~/.vim/autload ~/.vim/backup ~/.vim/tmp ~/.vim/colors ~/.vim/bundle
   cp vendor/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
 
   for dir in vendor/*; do
     test -L ~/.vim/bundle/`basename $dir` && rm ~/.vim/bundle/`basename $dir`
-    ln -s `pwd`/$dir ~/.vim/bundle/`basename $dir`
+    ln -s $pwd/$dir ~/.vim/bundle/`basename $dir`
   done
 }
 
+##### MAIN #####
 dots
 vim
