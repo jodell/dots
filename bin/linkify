@@ -21,6 +21,7 @@ dots() {
   for ssh in etc/ssh/*; do
     ln -sf $pwd/$ssh ~/.ssh/`basename $ssh`
   done
+  chmod 0600 $pwd/etc/ssh/config
 
   # ~/.bash/
   test -L ~/.bash && rm ~/.bash
