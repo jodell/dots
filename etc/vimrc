@@ -210,8 +210,10 @@ match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
 
+if v:version > 702
+  autocmd BufWinLeave * call clearmatches()
+endif
 
 " zucchini
 autocmd BufNewFile,BufReadPost *.zucchini set filetype=cucumber

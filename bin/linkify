@@ -11,6 +11,7 @@ dots() {
   done
 
   # ~/bin/*
+  test -d ~/bin || mkdir ~/bin
   for f in bin/*; do
     [[ `basename $f` == $self ]] && continue # skip $0
     ln -sf $pwd/$f ~/bin/`basename $f`
@@ -27,12 +28,16 @@ dots() {
 }
 
 vim() {
-  echo 'Setting up VIM'
-  mkdir -p ~/.vim/autload ~/.vim/backup ~/.vim/tmp ~/.vim/colors ~/.vim/bundle
+  echo 'Setting up Vim...'
+  mkdir -p ~/.vim/autoload ~/.vim/backup ~/.vim/tmp ~/.vim/colors ~/.vim/bundle
   cp vendor/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
 
   for dir in vendor/*; do
     test -L ~/.vim/bundle/`basename $dir` && rm ~/.vim/bundle/`basename $dir`
+    # HACK: This plugin should default correctly.
+    if [[ $dir == 'vendor/vim-clojure' ]]; then
+      which clj &> /dev/null || continue
+    fi
     ln -s $pwd/$dir ~/.vim/bundle/`basename $dir`
   done
 }
