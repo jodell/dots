@@ -55,3 +55,6 @@
 [submodule "vendor/ack.vim"]
 	path = vendor/ack.vim
 	url = git://github.com/mileszs/ack.vim.git
+[submodule "vendor/netrw"]
+	path = vendor/netrw
+	url = git://github.com/vim-scripts/netrw.vim.git
