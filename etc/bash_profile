@@ -9,10 +9,12 @@ elif [[ -s "/etc/profile.d/rvm.sh" ]]; then
 fi
 
 # History
-# NOTE: Why isn't histappend enabled by default?!
-export HISTCONTROL=erasedups
+export HISTCONTROL=erasedups:ignoredups
 export HISTSIZE=10000
+export HISTIGNORE="&:ls:[bf]g:exit"
+export PROMPT_COMMAND="history -a"
 shopt -s histappend
+shopt -s cmdhist
 
 # Enable git completion and handy functions like __git_ps1
 [[ -s "/usr/local/etc/bash_completion.d/git-completion.bash" ]] && . "/usr/local/etc/bash_completion.d/git-completion.bash"
@@ -34,3 +36,5 @@ export PATH=$HOME/bin:$PATH
 export PATH="./.bin:$PATH"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
