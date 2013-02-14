@@ -68,6 +68,7 @@ noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 noremap <Leader>r :!ruby %<CR>
 noremap <Leader>w :w!<CR>
 noremap <Leader>x :x!<CR>
+noremap <Leader>ev :tabnew $MYVIMRC<CR>
 noremap <Leader>q :qa<CR>
 noremap <Leader>ra :!rake %<CR>
 noremap <Leader>, :!!<CR>
@@ -104,6 +105,11 @@ noremap <Leader>v :source ~/.vimrc<CR>
 " Map ctrl-j to escape for more home row action!
 :imap <C-j> <Esc>
 
+" Tab Navigation
+map  <C-l> :tabn<CR>
+map  <C-h> :tabp<CR>
+map  <C-n> :tabnew<CR>
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Filetypes - Move Me
 " Load matchit (% to bounce from do to end, etc.)
@@ -122,9 +128,15 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
-"clojure"
+" Clojure
 let vimclojure#HighlightBuiltins = 1
 let vimclojure#ParenRainbow = 1
+
+" Obj-C
+autocmd BufRead,BufNewFile *.pch set filetype=objc
+"autocmd BufNewFile,BufReadPost *.zucchini set filetype=cucumber
+"autocmd BufRead,BufNewFile *.pch set ft=objc
+"autocmd BufEnter * if &filetype == "" | setlocal ft=txt | endif
 
 " change to the working directory of open buffer unless in /tmp
 "autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | lcd %:p:h | endif
@@ -134,6 +146,9 @@ highlight Pmenu ctermbg=238 gui=bold
 augroup mkd
   autocmd BufRead *.mkd,*.md  set ai formatoptions=tcroqn2 comments=n:&gt;
 augroup END
+
+" TagBar
+nmap <F8> :TagbarToggle<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " History
@@ -179,6 +194,10 @@ let g:github_token = $GITHUB_TOKEN
 
 let g:SuperTabDefaultCompletionType = "context"
 
+" ctrl-p
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
 " Include user's local vim config
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
@@ -217,3 +236,5 @@ endif
 
 " zucchini
 autocmd BufNewFile,BufReadPost *.zucchini set filetype=cucumber
+
+
