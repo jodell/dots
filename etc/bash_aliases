@@ -17,6 +17,7 @@ alias rebash='. ~/.bashrc'
 
 # git
 alias gs='git s'
+alias gf='git fetch'
 alias gd='git d'
 alias ga='git add'
 alias gco='git co'
@@ -24,6 +25,8 @@ alias gb='git b'
 alias gdh='git diff HEAD'
 alias gsh='git show HEAD'
 alias gdx='git diff | ~/Downloads/GitX.app/Contents/Resources/gitx'
+
+#alias pryr="pry -r ./config/environment -r rails/console/app -r rails/console/helpers"
 
 # RHEL Aliases
 if [ -f /etc/redhat-release ]; then
@@ -49,6 +52,9 @@ alias bi='bundle install --binstubs=./.bin'
 alias brake='bundle exec rake'
 alias bx='bundle exec'
 
+# OSX
+alias screensaver='/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine'
+alias ss='/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine'
 
 alias crontab='VIM_CRONTAB=true crontab'
 
