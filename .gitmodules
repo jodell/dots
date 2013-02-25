@@ -64,3 +64,6 @@
 [submodule "vendor/tagbar"]
 	path = vendor/tagbar
 	url = https://github.com/majutsushi/tagbar.git
+[submodule "vendor/nginx.vim"]
+	path = vendor/nginx.vim
+	url = git://github.com/vim-scripts/nginx.vim.git
