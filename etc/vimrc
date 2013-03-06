@@ -237,4 +237,4 @@ endif
 " zucchini
 autocmd BufNewFile,BufReadPost *.zucchini set filetype=cucumber
 
-
+highlight clear SignColumn

@@ -67,3 +67,6 @@
 [submodule "vendor/nginx.vim"]
 	path = vendor/nginx.vim
 	url = git://github.com/vim-scripts/nginx.vim.git
+[submodule "vendor/vim-gitgutter"]
+	path = vendor/vim-gitgutter
+	url = git://github.com/airblade/vim-gitgutter.git
