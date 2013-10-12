@@ -1,0 +1,26 @@
+export EDITOR=/usr/bin/vim
+export CLICOLOR=1
+export LESS='-R' # escape raw characters e.g. color
+export PAGER=/usr/bin/less
+#export PAGER=/usr/local/bin/most
+export GREP_OPTIONS='--color=auto'
+export SHELL=/usr/bin/bash
+
+#PS1='\h:\W \$ '
+# Make bash check its window size after a process completes
+shopt -s checkwinsize
+
+# OSX
+pman() { man -t "$@" | open -f -a Preview; }
+
+# Aliases
+[[ -s "$HOME/.bash_aliases" ]] && . "$HOME/.bash_aliases"
+
+# Local bash customizations
+[[ -s "$HOME/.bashrc.local" ]] && . "$HOME/.bashrc.local"
+
+# tmuxinator
+[[ -s $HOME/.tmuxinator/scripts/tmuxinator ]] && source $HOME/.tmuxinator/scripts/tmuxinator
+
+# RVM
+[[ -d $HOME/.rvm ]] && PATH=$PATH:$HOME/.rvm/bin
