@@ -1,0 +1,21 @@
+#!/bin/bash
+
+DOTFILES_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}/../../.." )" && pwd )"
+
+if [ $# -eq 0 ]
+then
+  exit
+fi
+
+$DOTFILES_PATH/bin/hlink $1 $DOTFILES_PATH/$(basename $1)
+
+if [ $# -eq 2 ]
+then
+  DIR=`pwd`
+  cd $DOTFILES_PATH
+  git add .
+  git commit -a -m "$2"
+  git push origin master
+  cd $DIR
+fi
+
