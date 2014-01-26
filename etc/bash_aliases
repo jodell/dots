@@ -25,6 +25,7 @@ alias gb='git b'
 alias gdh='git diff HEAD'
 alias gsh='git show HEAD'
 alias gdx='git diff | ~/Downloads/GitX.app/Contents/Resources/gitx'
+alias reup='git fetch && git pull origin master'
 
 #alias pryr="pry -r ./config/environment -r rails/console/app -r rails/console/helpers"
 
@@ -52,6 +53,9 @@ alias bi='bundle install --binstubs=./.bin'
 alias brake='bundle exec rake'
 alias bx='bundle exec'
 
+# tmux
+alias mux='tmux -f ~/tmux.conf'
+
 # OSX
 alias screensaver='/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine'
 alias ss='/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine'
@@ -59,3 +63,7 @@ alias ss='/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaver
 alias crontab='VIM_CRONTAB=true crontab'
 
 [[ -e ~/.bash_aliases.local ]] && . ~/.bash_aliases.local
+
+mwiki() { dig +short txt "$*".wp.dg.cx; }
+
+alias rtest='ruby -I"lib:test"'

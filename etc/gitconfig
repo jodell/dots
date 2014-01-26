@@ -2,13 +2,13 @@
   diff = auto
 
 [user]
-  name = Jeffrey ODell
+	name = Jeffrey ODell
   email = jeffrey.odell@gmail.com
 
 [core]
   whitespace = trailing-space,space-before-tab
   autocrlf = input
-  safecrlf = true
+  safecrlf = false
   excludesfile = ~/.gitignore_global
 
 [apply]
@@ -52,3 +52,6 @@
   added = yellow
   changed = green
   untracked = cyan
+
+[push]
+  default = current

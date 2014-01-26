@@ -42,11 +42,11 @@ export PATH=$HOME/bin:$PATH
 # Bundler
 export PATH="./.bin:$PATH"
 
-if [[ -s "$HOME/.rvm/scripts/rvm" ]]; then
-  source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
-fi
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
 
-if [[ -d "$HOME/.rbenv" ]]; then
-  export PATH="$HOME/.rbenv/bin:$PATH"
-  eval "$(rbenv init -)"
-fi
+export JAVA_HOME="$(/usr/libexec/java_home)"
+
+# AWS
+export AWS_IAM_HOME="/usr/local/opt/aws-iam-tools/jars"
+export AWS_CREDENTIAL_FILE=$HOME/.aws-credentials-master
