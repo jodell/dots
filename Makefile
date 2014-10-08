@@ -9,3 +9,6 @@ link :
 
 update :
 	git fetch && git pull origin master
+
+apt :
+	sudo apt-get install htop git-core tree vim

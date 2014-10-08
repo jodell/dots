@@ -33,6 +33,10 @@ alias reup='git fetch && git pull origin master'
 if [ -f /etc/redhat-release ]; then
   alias ls='ls --color=auto'
 fi
+if [ -f /etc/issue ]; then
+  alias ls='ls --color=auto'
+fi
+
 
 function git_current_branch() {
   git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///'

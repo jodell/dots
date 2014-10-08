@@ -45,7 +45,7 @@ export PATH="./.bin:$PATH"
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-export JAVA_HOME="$(/usr/libexec/java_home)"
+[[ -f /usr/libexec/java_home ]] && export JAVA_HOME="$(/usr/libexec/java_home)"
 
 # AWS
 export AWS_IAM_HOME="/usr/local/opt/aws-iam-tools/jars"
