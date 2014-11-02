@@ -244,6 +244,9 @@ highlight clear SignColumn
 
 set pastetoggle=
 
+" syntastic
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_signs=1
 
 function! DoPrettyXML()
   " save the filetype so we can restore it later
