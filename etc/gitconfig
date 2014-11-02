@@ -7,8 +7,8 @@
 
 [core]
   whitespace = trailing-space,space-before-tab
-  autocrlf = input
-  safecrlf = false
+  autocrlf = false
+  safecrlf = true
   excludesfile = ~/.gitignore_global
 
 [apply]

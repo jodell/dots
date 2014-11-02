@@ -45,7 +45,7 @@ set laststatus=2
 set statusline=%F\ <%{GitBranch()}>\ %l,%v
 
 " Strip trailing whitespace upon write
-autocmd BufWritePre *.{m,h,rb,js,coffee,scss,css,yml,rake} call StripTrailingWhiteSpace()
+autocmd BufWritePre *.{m,h,erb,haml,rb,js,coffee,scss,css,yml} call StripTrailingWhiteSpace()
 
 function! StripTrailingWhiteSpace()
   let l:winview = winsaveview()
