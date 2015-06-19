@@ -73,3 +73,6 @@
 [submodule "vendor/syntastic"]
 	path = vendor/syntastic
 	url = https://github.com/scrooloose/syntastic.git
+[submodule "vendor/paredit"]
+	path = vendor/paredit
+	url = git@github.com:vim-scripts/paredit.vim.git
