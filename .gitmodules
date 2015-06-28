@@ -76,3 +76,6 @@
 [submodule "vendor/paredit"]
 	path = vendor/paredit
 	url = git@github.com:vim-scripts/paredit.vim.git
+[submodule "vendor/vim-clojure-static"]
+	path = vendor/vim-clojure-static
+	url = git@github.com:guns/vim-clojure-static.git
