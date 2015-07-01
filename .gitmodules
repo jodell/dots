@@ -82,3 +82,9 @@
 [submodule "vendor/rainbow_parentheses"]
 	path = vendor/rainbow_parentheses
 	url = git@github.com:kien/rainbow_parentheses.vim.git
+[submodule "vendor/vim-fireplace"]
+	path = vendor/vim-fireplace
+	url = git@github.com:tpope/vim-fireplace.git
+[submodule "vendor/vim-salve"]
+	path = vendor/vim-salve
+	url = git@github.com:tpope/vim-salve.git
