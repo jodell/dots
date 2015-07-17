@@ -26,6 +26,10 @@ dots() {
   # ~/.bash/
   test -L ~/.bash && rm ~/.bash
   ln -s $pwd/etc/bash ~/.bash
+
+  # ~/.lein/
+  test -L ~/.lein && rm ~/.lein
+  ln -s $pwd/etc/lein ~/.lein
 }
 
 vim() {
