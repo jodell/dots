@@ -88,3 +88,6 @@
 [submodule "vendor/vim-salve"]
 	path = vendor/vim-salve
 	url = git@github.com:tpope/vim-salve.git
+[submodule "vendor/vim-go"]
+	path = vendor/vim-go
+	url = git@github.com:fatih/vim-go.git
