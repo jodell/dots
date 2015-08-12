@@ -27,3 +27,6 @@ pman() { man -t "$@" | open -f -a Preview; }
 
 # RVM
 [[ -d $HOME/.rvm ]] && PATH=$PATH:$HOME/.rvm/bin
+
+### Added by the Heroku Toolbelt
+[[ -d /usr/local/heroku/bin ]] && export PATH="/usr/local/heroku/bin:$PATH"
