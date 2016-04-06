@@ -4,6 +4,7 @@
 [user]
 	name = Jeffrey ODell
   email = jeffrey.odell@gmail.com
+	signingkey = 7DC14831
 
 [core]
   whitespace = trailing-space,space-before-tab
@@ -55,3 +56,5 @@
 
 [push]
   default = current
+[commit]
+	gpgsign = true
