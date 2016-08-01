@@ -73,3 +73,5 @@ mwiki() { dig +short txt "$*".wp.dg.cx; }
 alias rtest='ruby -I"lib:test"'
 
 alias reup='git fetch; git merge origin/master'
+
+alias keys='ssh-add ~/.ssh/id_dsa; ssh-add ~/.ssh/umsondo'

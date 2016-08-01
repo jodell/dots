@@ -91,3 +91,6 @@
 [submodule "vendor/vim-go"]
 	path = vendor/vim-go
 	url = git@github.com:fatih/vim-go.git
+[submodule "vendor/vim-elixir"]
+	path = vendor/vim-elixir
+	url = https://github.com/elixir-lang/vim-elixir.git
