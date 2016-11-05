@@ -30,3 +30,6 @@ pman() { man -t "$@" | open -f -a Preview; }
 
 ### Added by the Heroku Toolbelt
 [[ -d /usr/local/heroku/bin ]] && export PATH="/usr/local/heroku/bin:$PATH"
+
+# Keybase.io
+export GPG_TTY=$(tty)
