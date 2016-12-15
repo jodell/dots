@@ -94,3 +94,6 @@
 [submodule "vendor/vim-elixir"]
 	path = vendor/vim-elixir
 	url = https://github.com/elixir-lang/vim-elixir.git
+[submodule "vendor/typescript-vim"]
+	path = vendor/typescript-vim
+	url = https://github.com/leafgarland/typescript-vim

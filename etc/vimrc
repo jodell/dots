@@ -238,6 +238,9 @@ endif
 " zucchini
 autocmd BufNewFile,BufReadPost *.zucchini set filetype=cucumber
 
+" TypeScript
+autocmd BufNewFile,BufReadPost *.ts set filetype=typescript
+
 highlight clear SignColumn
 
 " Set paste automatically
