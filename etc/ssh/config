@@ -24,6 +24,7 @@ Host *.amazonaws.com
 Host *
   ForwardAgent yes
   SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+  AddKeysToAgent yes
 #   ForwardX11 no
 #   RhostsRSAAuthentication no
 #   RSAAuthentication yes
@@ -39,7 +40,7 @@ Host *
 #   ConnectTimeout 0
 #   StrictHostKeyChecking ask
 #   IdentityFile ~/.ssh/identity
-#   IdentityFile ~/.ssh/id_rsa
+   IdentityFile ~/.ssh/id_rsa
 #   IdentityFile ~/.ssh/id_dsa
 #   Port 22
 #   Protocol 2,1
