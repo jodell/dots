@@ -17,6 +17,9 @@ dots() {
     ln -sf $pwd/$f ~/bin/`basename $f`
   done
 
+  # Postgres
+  test -d ~/.psql || mkdir ~/.psql
+
   # ~/.ssh/*
   for ssh in etc/ssh/*; do
     ln -sf $pwd/$ssh ~/.ssh/`basename $ssh`
