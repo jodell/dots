@@ -33,3 +33,8 @@ pman() { man -t "$@" | open -f -a Preview; }
 
 # Keybase.io
 export GPG_TTY=$(tty)
+
+# Golang
+export GOPATH=$HOME/go
+export GOROOT=`go env GOROOT`
+export PATH=$GOPATH/bin:$PATH:$GOROOT/bin
