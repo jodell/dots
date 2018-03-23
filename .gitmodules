@@ -97,3 +97,6 @@
 [submodule "vendor/typescript-vim"]
 	path = vendor/typescript-vim
 	url = https://github.com/leafgarland/typescript-vim
+[submodule "vendor/swift.vim"]
+	path = vendor/swift.vim
+	url = https://github.com/keith/swift.vim
