@@ -16,7 +16,7 @@
   whitespace = fix
 
 [github]
-  user = jodell
+	user = jodell
 
 [branch]
   autosetupmerge = true

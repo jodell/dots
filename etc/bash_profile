@@ -8,6 +8,10 @@ elif [[ -s "/etc/profile.d/rvm.sh" ]]; then
   . "/etc/profile.d/rvm.sh"
 fi
 
+# NVM
+export NVM_DIR="$HOME/.nvm"
+. "/usr/local/opt/nvm/nvm.sh"
+
 # History
 export HISTCONTROL=erasedups:ignoredups
 export HISTSIZE=10000
