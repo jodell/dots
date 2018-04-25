@@ -1,20 +1,21 @@
 #!/bin/bash
-self=`basename $0`
-pwd=`pwd`
+self=$(basename "$(0)")
+pwd=$(pwd)
 
 dots() {
   echo 'Linking dotfiles...'
   # standard dots
   for dot in etc/*; do
-    test -d $dot && continue
-    ln -sf $pwd/$dot ~/.`basename $dot`
+    test -d "$dot" && continue
+    basenamedot="$(basename "$dot")"
+    ln -sf "$(pwd)/$(dot)" "$HOME/.$basenamedot"
   done
 
   # ~/bin/*
   test -d ~/bin || mkdir ~/bin
   for f in bin/*; do
-    [[ `basename $f` == $self ]] && continue # skip $0
-    ln -sf $pwd/$f ~/bin/`basename $f`
+    [[ $(basename "$f") == "$self" ]] && continue # skip $0
+    ln -sf "$pwd/$f" ~/bin/"$(basename "$f")"
   done
 
   # Postgres
@@ -22,17 +23,17 @@ dots() {
 
   # ~/.ssh/*
   for ssh in etc/ssh/*; do
-    ln -sf $pwd/$ssh ~/.ssh/`basename $ssh`
+    ln -sf "$pwd/$ssh" ~/.ssh/"$(basename "$ssh")"
   done
-  chmod 0600 $pwd/etc/ssh/config
+  chmod 0600 "$pwd/etc/ssh/config"
 
   # ~/.bash/
   test -L ~/.bash && rm ~/.bash
-  ln -s $pwd/etc/bash ~/.bash
+  ln -s "$pwd/etc/bash" ~/.bash
 
   # ~/.lein/
   test -L ~/.lein && rm ~/.lein
-  ln -s $pwd/etc/lein ~/.lein
+  ln -s "$pwd/etc/lein" ~/.lein
 }
 
 vim() {
@@ -41,12 +42,12 @@ vim() {
   cp vendor/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
 
   for dir in vendor/*; do
-    test -L ~/.vim/bundle/`basename $dir` && rm ~/.vim/bundle/`basename $dir`
+    test -L ~/.vim/bundle/"$(basename "$dir")" && rm ~/.vim/bundle/"$(basename "$dir")"
     # HACK: This plugin should default correctly.
     if [[ $dir == 'vendor/vim-clojure' ]]; then
       which clj &> /dev/null || continue
     fi
-    ln -s $pwd/$dir ~/.vim/bundle/`basename $dir`
+    ln -s "$pwd/$dir" ~/.vim/bundle/"$(basename "$dir")"
   done
 }
 
