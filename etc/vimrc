@@ -142,6 +142,9 @@ autocmd BufRead,BufNewFile *.pch set filetype=objc
 " change to the working directory of open buffer unless in /tmp
 "autocmd BufEnter * if expand("%:p:h") !~ '^/tmp' | lcd %:p:h | endif
 
+" CocoaPods
+au BufNewFile,BufRead Podfile,*.podspec set filetype=ruby
+
 "improve autocomplete menu color
 highlight Pmenu ctermbg=238 gui=bold
 augroup mkd
