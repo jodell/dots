@@ -74,3 +74,5 @@ alias rtest='ruby -I"lib:test"'
 alias reup='git fetch; git merge origin/master'
 
 alias keys='ssh-add ~/.ssh/id_dsa; ssh-add ~/.ssh/umsondo'
+
+alias weather="ansiweather -l chicago -u imperial"
