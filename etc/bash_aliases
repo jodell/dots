@@ -5,7 +5,8 @@ alias tree='tree -C'
 alias h='history'
 alias r='rake'
 alias dots="cd ~/git/dotsfiles"
-alias rgrep="grep -r"
+alias grep="grep --color=auto"
+alias rgrep="grep -r --color=auto"
 alias ffp='/Applications/Firefox.app/Contents/MacOS/firefox-bin -profilemanager'
 
 alias less='less -XLR'

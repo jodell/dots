@@ -3,7 +3,6 @@ export CLICOLOR=1
 export LESS='-R' # escape raw characters e.g. color
 export PAGER=/usr/bin/less
 #export PAGER=/usr/local/bin/most
-export GREP_OPTIONS='--color=auto'
 
 # FIXME
 [[ -f /usr/bin/bash ]] && export SHELL=/usr/bin/bash
