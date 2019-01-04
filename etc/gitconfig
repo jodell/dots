@@ -61,6 +61,6 @@
   gpgsign = true
 
 [gpg]
-  program = /usr/local/bin/gpg
+  program = gpg
 [url "git@github.com:"]
 	insteadOf = https://github.com/
