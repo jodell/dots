@@ -1,3 +1,5 @@
+#!/bin/bash
+
 alias ll='ls -l'
 alias la='ls -a'
 alias l='ls -CF'
@@ -25,7 +27,7 @@ alias gb='git b'
 alias gdh='git diff HEAD'
 alias gsh='git show HEAD'
 alias gdx='git diff | ~/Downloads/GitX.app/Contents/Resources/gitx'
-alias reup='git fetch && git pull origin master'
+alias reup='git fetch && git pull origin main'
 
 #alias pryr="pry -r ./config/environment -r rails/console/app -r rails/console/helpers"
 
