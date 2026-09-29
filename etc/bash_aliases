@@ -75,3 +75,4 @@ mwiki() { dig +short txt "$*".wp.dg.cx; }
 alias rtest='ruby -I"lib:test"'
 alias keys='ssh-add ~/.ssh/id_dsa; ssh-add ~/.ssh/umsondo'
 alias weather="ansiweather -l chicago -u imperial"
+alias plex='ssh jodell@192.168.1.187'

@@ -64,3 +64,5 @@
   program = gpg
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[includeIf "gitdir:~/git/elanorlabs/"]
+	path = /Users/jodell/.gitconfig-elanorlabs
