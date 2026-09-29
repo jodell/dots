@@ -1,8 +1,13 @@
-# gpg-agent
-[ -f ~/.gpg-agent-info ] && source ~/.gpg-agent-info
-if [ -S "${GPG_AGENT_INFO%%:*}" ]; then
-  export GPG_AGENT_INFO
-  export GPG_TTY=$(tty)
-else
-  eval $( gpg-agent --daemon --write-env-file ~/.gpg-agent-info )
-fi
+# ~/.profile -- POSIX login shells (sh, dash) and desktop session managers.
+#
+# gpg-agent needs no bootstrap here: GnuPG >= 2.1 (2014) starts its own agent
+# on demand, and GPG_AGENT_INFO / --write-env-file were removed in that
+# release. GPG_TTY is set in ~/.shell/interactive.sh, where there is a tty.
+
+dots_source() { [ -r "$1" ] || return 1; . "$1"; }
+
+dots_source "$HOME/.shell/os.sh" || return 0
+dots_source "$HOME/.shell/env.sh"
+
+dots_source "$HOME/.profile.local"
+return 0
