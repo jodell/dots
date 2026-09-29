@@ -1,6 +1,9 @@
 #!/bin/bash
 
-# This enables persistent agents when using GNU Screen.
+# Persistent agent socket for screen/tmux reattach. MUST be silent: sshd runs
+# ~/.ssh/rc on EVERY incoming connection and its stdout joins the session
+# stream — the verbose ln here corrupted rsync ("protocol version mismatch --
+# is your shell clean?", machine migration 2026-09-29).
 if test "$SSH_AUTH_SOCK" ; then
-  ln -sfv $SSH_AUTH_SOCK ~/.ssh/ssh_auth_sock
+  ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
 fi

@@ -21,7 +21,15 @@ Host *.amazonaws.com
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
 
+Host github.com
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_escher
+
 Host *
+  # macOS-only option; IgnoreUnknown keeps this config portable to Linux.
+  IgnoreUnknown UseKeychain
+  UseKeychain yes
   ForwardAgent yes
   SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
   AddKeysToAgent yes
@@ -40,8 +48,8 @@ Host *
 #   ConnectTimeout 0
 #   StrictHostKeyChecking ask
 #   IdentityFile ~/.ssh/identity
-   IdentityFile ~/.ssh/id_rsa
-#   IdentityFile ~/.ssh/id_dsa
+#   IdentityFile ~/.ssh/id_rsa
+   IdentityFile ~/.ssh/id_escher
 #   Port 22
 #   Protocol 2,1
 #   Cipher 3des
