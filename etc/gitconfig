@@ -1,10 +1,5 @@
-[color]
-  diff = auto
-
-[user]
-  name = Jeffrey ODell
-  email = jeffrey.odell@gmail.com
-  signingkey = 7DC14831
+# Portable git config. Identity, signing keys and per-machine includes live in
+# ~/.gitconfig.local (untracked) -- see the [include] at the bottom.
 
 [core]
   whitespace = trailing-space,space-before-tab
@@ -15,11 +10,28 @@
 [apply]
   whitespace = fix
 
-[github]
-	user = jodell
+[init]
+  defaultBranch = main
 
 [branch]
   autosetupmerge = true
+
+[push]
+  default = current
+
+[pull]
+  ff = only
+
+# Commit signing uses SSH keys, not GPG: 1Password serves SSH keys through its
+# agent and has no GPG agent, so an SSH key is the one secret that never has to
+# touch disk. Which key is machine-local; see ~/.gitconfig.local.
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  # Public keys you trust, so `git log --show-signature` verifies locally.
+  # Regenerate with: make allowed-signers
+  allowedSignersFile = ~/.ssh/allowed_signers
 
 [alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative --no-merges
@@ -31,11 +43,11 @@
   b = branch
 
 [color]
+  ui = true
   diff = auto
   status = auto
   branch = auto
   interactive = auto
-  ui = true
   pager = true
 
 [color "branch"]
@@ -54,15 +66,13 @@
   changed = green
   untracked = cyan
 
-[push]
-  default = current
-
-[commit]
-  gpgsign = true
-
-[gpg]
-  program = gpg
+# Push over SSH, fetch over HTTPS. `insteadOf` would rewrite *all* github.com
+# URLs -- including this repo's 30-odd vendor submodules -- and every clone on
+# a machine without a GitHub key would then fail.
 [url "git@github.com:"]
-	insteadOf = https://github.com/
-[includeIf "gitdir:~/git/elanorlabs/"]
-	path = /Users/jodell/.gitconfig-elanorlabs
+  pushInsteadOf = https://github.com/
+
+# Machine-local: user.name / user.email / user.signingkey, commit.gpgsign,
+# work identities, credential helpers. Not tracked, and not an error if absent.
+[include]
+  path = ~/.gitconfig.local

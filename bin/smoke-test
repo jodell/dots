@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+#
+# Assert that the installed dotfiles produce a CLEAN shell on this machine.
+#
+# The failure this exists to catch: anything that writes to stdout during shell
+# startup silently corrupts rsync, scp and git-over-ssh -- "protocol version
+# mismatch -- is your shell clean?". This repo has shipped that bug twice
+# (~/.ssh/rc printing a symlink, `command -v go` printing a path), and both
+# times it was found in production rather than here.
+#
+set -uo pipefail
+
+pass=0
+fail=0
+
+ok()   { printf '  ok    %s\n' "$1"; pass=$((pass + 1)); }
+bad()  { printf '  FAIL  %s\n' "$1"; fail=$((fail + 1)); }
+
+# assert_silent DESC -- run a shell and require empty stdout and exit 0.
+assert_silent() {
+  local desc=$1; shift
+  local out status
+  out=$("$@" 2>/dev/null)
+  status=$?
+  if [ "$status" -ne 0 ]; then
+    bad "$desc (exit $status)"
+  elif [ -n "$out" ]; then
+    bad "$desc (wrote to stdout: $(printf '%s' "$out" | head -3 | tr '\n' ' '))"
+  else
+    ok "$desc"
+  fi
+}
+
+have() { command -v "$1" >/dev/null 2>&1; }
+
+echo "smoke-test: $(uname -s) $(uname -m)"
+
+# --- the big one: startup must be silent ------------------------------------
+if have bash; then
+  assert_silent 'bash -c (non-interactive) is silent'      bash -c 'true'
+  assert_silent 'bash -l -c (login) is silent'             bash -lc 'true'
+  assert_silent 'bash -i -c (interactive) is silent'       bash -ic 'true'
+fi
+if have zsh; then
+  assert_silent 'zsh -c (non-interactive) is silent'       zsh -c 'true'
+  assert_silent 'zsh -l -c (login) is silent'              zsh -lc 'true'
+  assert_silent 'zsh -i -c (interactive) is silent'        zsh -ic 'true'
+fi
+if have sh; then
+  assert_silent 'sh -l -c (POSIX login) is silent'         sh -lc 'true'
+fi
+
+# --- PATH sanity ------------------------------------------------------------
+# An empty PATH element means "current directory" -- anything in the cwd
+# becomes executable by name.
+path_check() {
+  local shell=$1 p
+  p=$("$shell" -lc 'printf %s "$PATH"' 2>/dev/null) || return 0
+  # A leading, trailing or doubled colon is an empty element, which POSIX
+  # resolves to the current directory.
+  case $p in
+    :* | *: | *::*) bad "$shell PATH has an empty element (cwd on PATH): $p" ;;
+    *) ok "$shell PATH has no empty elements" ;;
+  esac
+  case "$p" in
+    *".:"* | *":."*) bad "$shell PATH contains '.'" ;;
+    *) ok "$shell PATH does not contain '.'" ;;
+  esac
+}
+have bash && path_check bash
+have zsh && path_check zsh
+
+# --- the tools the configs assume ------------------------------------------
+for c in git vim; do
+  have "$c" && ok "$c present" || bad "$c missing"
+done
+
+# --- config files parse -----------------------------------------------------
+if have git; then
+  git config --list >/dev/null 2>&1 && ok 'git config parses' || bad 'git config broken'
+fi
+if have ssh; then
+  ssh -G example.com >/dev/null 2>&1 && ok 'ssh config parses' || bad 'ssh config broken'
+fi
+if have vim; then
+  # Start vim the way a human does, then read :messages back. NOT `vim -Es`:
+  # Ex mode forces cpoptions+=C, which breaks line continuations in every
+  # plugin and reports errors that do not happen in a real session.
+  msgs=$(mktemp)
+  term_flag=--not-a-term
+  vim --not-a-term --version >/dev/null 2>&1 || term_flag=
+  # shellcheck disable=SC2086
+  vim $term_flag -c "redir! > $msgs" -c 'silent messages' -c 'redir END' \
+      -c 'qall!' </dev/null >/dev/null 2>&1
+  if grep -qE '^E[0-9]+:|^Error detected' "$msgs" 2>/dev/null; then
+    bad "vim startup errors: $(grep -m2 -E '^E[0-9]+:|^Error detected' "$msgs" | tr '\n' ' ')"
+  else
+    ok 'vim loads without errors'
+  fi
+  rm -f "$msgs"
+fi
+if have tmux; then
+  if tmux -f "$HOME/.tmux.conf" new-session -d -s dots-smoke 'true' 2>/tmp/dots-tmux-err; then
+    tmux kill-session -t dots-smoke 2>/dev/null
+    [ -s /tmp/dots-tmux-err ] &&
+      bad "tmux.conf emitted errors: $(head -2 /tmp/dots-tmux-err | tr '\n' ' ')" ||
+      ok 'tmux.conf loads without errors'
+  else
+    bad "tmux.conf failed: $(head -2 /tmp/dots-tmux-err | tr '\n' ' ')"
+  fi
+  rm -f /tmp/dots-tmux-err
+fi
+
+# --- commit signing ---------------------------------------------------------
+# If signing is enabled it must actually work: `commit.gpgsign = true` with an
+# unusable key fails every commit, which is how this repo sat for a while with
+# a GPG key that had never been migrated onto the machine.
+if have git && [ "$(git config --get commit.gpgsign 2>/dev/null)" = true ]; then
+  fmt=$(git config --get gpg.format 2>/dev/null || echo openpgp)
+  key=$(git config --get user.signingkey 2>/dev/null)
+  case $fmt in
+    ssh)
+      keyfile=${key/#\~/$HOME}
+      if [ -z "$key" ]; then
+        bad 'commit.gpgsign is on but user.signingkey is unset'
+      elif printf test | ssh-keygen -Y sign -f "$keyfile" -n git >/dev/null 2>&1; then
+        ok 'git can sign commits (ssh)'
+      else
+        bad "commit.gpgsign is on but ssh signing with $key fails"
+      fi
+      ;;
+    *)
+      if printf test | gpg --clearsign >/dev/null 2>&1; then
+        ok 'git can sign commits (gpg)'
+      else
+        bad 'commit.gpgsign is on but gpg has no usable secret key'
+      fi
+      ;;
+  esac
+fi
+
+# --- no dangling symlinks left in $HOME -------------------------------------
+dangling=0
+for f in "$HOME"/.[!.]*; do
+  [ -L "$f" ] && [ ! -e "$f" ] && { printf '  FAIL  dangling symlink: %s\n' "$f"; dangling=1; }
+done
+[ "$dangling" = 0 ] && ok 'no dangling dotfile symlinks' || fail=$((fail + 1))
+
+printf '\n%d passed, %d failed\n' "$pass" "$fail"
+[ "$fail" -eq 0 ]

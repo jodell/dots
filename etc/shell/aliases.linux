@@ -1,0 +1,16 @@
+# Linux-only aliases and functions (Mint, Ubuntu, Debian, Raspberry Pi OS).
+
+have xdg-open && alias o='xdg-open'
+have systemctl && alias sc='systemctl'
+have journalctl && alias jc='journalctl'
+
+# Match the macOS clipboard verbs so muscle memory carries across boxes.
+if have xclip; then
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+elif have xsel; then
+  alias pbcopy='xsel --clipboard --input'
+  alias pbpaste='xsel --clipboard --output'
+fi
+
+have apt && alias up='sudo apt update && sudo apt upgrade'

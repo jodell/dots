@@ -1,3 +1,16 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# ~/.zprofile -- login zsh only, read before ~/.zshrc.
+#
+# Homebrew is loaded here rather than in .zshrc so that FPATH below (and
+# anything compinit picks up in .zshrc) can see the brew prefix. On a machine
+# without brew this is a no-op, not an error.
 
-FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+dots_source() { [ -r "$1" ] || return 1; . "$1"; }
+
+dots_source "$HOME/.shell/os.sh" || return 0
+dots_source "$HOME/.shell/brew.sh"
+
+[ -n "${HOMEBREW_PREFIX:-}" ] && [ -d "$HOMEBREW_PREFIX/share/zsh/site-functions" ] &&
+  FPATH="$HOMEBREW_PREFIX/share/zsh/site-functions:${FPATH}"
+
+dots_source "$HOME/.zprofile.local"
+return 0

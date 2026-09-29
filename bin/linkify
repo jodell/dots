@@ -1,55 +1,176 @@
-#!/bin/bash
-self=`basename $0`
-pwd=`pwd`
+#!/usr/bin/env bash
+#
+# Symlink this repo into $HOME. Idempotent, and safe to re-run.
+#
+#   bin/linkify              # everything, including vim plugins
+#   bin/linkify --minimal    # shell/git/ssh config only -- for servers and Pis
+#   bin/linkify --dry-run    # print what would change, touch nothing
+#
+set -euo pipefail
+
+# Resolve the repo from this script's own location, not $PWD: linkify used to
+# bake `pwd` into every symlink, so running it from anywhere else produced a
+# tree of dangling links.
+DOTS=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd -P)
+
+DRY_RUN=0
+PROFILE=full
+
+usage() {
+  sed -n '3,8p' "$0" | sed 's/^# \{0,1\}//'
+  exit "${1:-0}"
+}
+
+for arg in "$@"; do
+  case "$arg" in
+    -n | --dry-run) DRY_RUN=1 ;;
+    --minimal) PROFILE=minimal ;;
+    --full) PROFILE=full ;;
+    -h | --help) usage 0 ;;
+    *) printf 'linkify: unknown option: %s\n' "$arg" >&2; usage 1 ;;
+  esac
+done
+
+say() { printf '%s\n' "$*"; }
+run() {
+  if [ "$DRY_RUN" = 1 ]; then
+    printf '  would: %s\n' "$*"
+  else
+    "$@"
+  fi
+}
+
+# link SRC DST -- SRC is relative to the repo root.
+link() {
+  local src="$DOTS/$1" dst="$2"
+
+  [ -e "$src" ] || { printf 'linkify: missing source: %s\n' "$src" >&2; return 0; }
+
+  # Already correct? Say nothing, do nothing.
+  if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
+    return 0
+  fi
+
+  # Never clobber a real file without a copy of it.
+  if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+    local backup="$dst.bak-$(date +%Y%m%d%H%M%S)"
+    say "  backup $dst -> $backup"
+    run mv -- "$dst" "$backup"
+  fi
+
+  say "  link   ${dst#"$HOME"/} -> ${src#"$DOTS"/}"
+  # -n so that an existing symlink-to-directory is REPLACED rather than being
+  # followed and linked into (GNU and BSD ln differ here without it).
+  run ln -sfn -- "$src" "$dst"
+}
+
+# unlink_stale DST -- remove DST only if it is a symlink pointing into this repo.
+unlink_stale() {
+  local dst="$1"
+  [ -L "$dst" ] || return 0
+  case "$(readlink "$dst")" in
+    "$DOTS"/*) say "  prune  ${dst#"$HOME"/}"; run rm -f -- "$dst" ;;
+  esac
+}
 
 dots() {
-  echo 'Linking dotfiles...'
-  # standard dots
-  for dot in etc/*; do
-    test -d $dot && continue
-    ln -sf $pwd/$dot ~/.`basename $dot`
+  say 'Linking dotfiles...'
+  # etc/<name> -> ~/.<name>, skipping directories (handled explicitly below).
+  local f name
+  for f in "$DOTS"/etc/*; do
+    [ -d "$f" ] && continue
+    name=$(basename "$f")
+    link "etc/$name" "$HOME/.$name"
   done
+
+  # Directories that ship as a unit.
+  link etc/shell "$HOME/.shell"
+  link etc/bash "$HOME/.bash"
+  link etc/lein "$HOME/.lein"
 
   # ~/bin/*
-  test -d ~/bin || mkdir ~/bin
-  for f in bin/*; do
-    [[ `basename $f` == $self ]] && continue # skip $0
-    ln -sf $pwd/$f ~/bin/`basename $f`
+  run mkdir -p "$HOME/bin"
+  local self
+  self=$(basename "$0")
+  for f in "$DOTS"/bin/*; do
+    name=$(basename "$f")
+    [ "$name" = "$self" ] && continue
+    link "bin/$name" "$HOME/bin/$name"
   done
 
-  # Postgres
-  test -d ~/.psql || mkdir ~/.psql
-
-  # ~/.ssh/*
-  for ssh in etc/ssh/*; do
-    ln -sf $pwd/$ssh ~/.ssh/`basename $ssh`
-  done
-  chmod 0600 $pwd/etc/ssh/config
-
-  # ~/.bash/
-  test -L ~/.bash && rm ~/.bash
-  ln -s $pwd/etc/bash ~/.bash
-
-  # ~/.lein/
-  test -L ~/.lein && rm ~/.lein
-  ln -s $pwd/etc/lein ~/.lein
+  # psql history dir referenced by ~/.psqlrc
+  run mkdir -p "$HOME/.psql"
 }
 
-vim() {
-  echo 'Setting up Vim...'
-  mkdir -p ~/.vim/autoload ~/.vim/backup ~/.vim/tmp ~/.vim/colors ~/.vim/bundle
-  cp vendor/vim-pathogen/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
+ssh_config() {
+  say 'Linking ssh config...'
+  # ssh refuses to use a config that is group/world writable, and sshd ignores
+  # ~/.ssh entirely if the directory is too permissive.
+  run mkdir -p "$HOME/.ssh"
+  run chmod 700 "$HOME/.ssh"
+  local f name
+  for f in "$DOTS"/etc/ssh/*; do
+    name=$(basename "$f")
+    link "etc/ssh/$name" "$HOME/.ssh/$name"
+    # Permissions are checked on the link TARGET, i.e. the file in this repo.
+    # sshd runs ~/.ssh/rc through sh, so it needs read access, not exec.
+    run chmod 600 "$f"
+  done
+}
 
-  for dir in vendor/*; do
-    test -L ~/.vim/bundle/`basename $dir` && rm ~/.vim/bundle/`basename $dir`
-    # HACK: This plugin should default correctly.
-    if [[ $dir == 'vendor/vim-clojure' ]]; then
-      which clj &> /dev/null || continue
+vim_plugins() {
+  if [ "$PROFILE" = minimal ]; then
+    say 'Skipping vim plugins (--minimal).'
+    return 0
+  fi
+
+  say 'Setting up vim plugins...'
+  # Vim 8+ / Neovim load anything under pack/*/start automatically. No
+  # pathogen, no bundle dir, no autoload shim.
+  run mkdir -p "$HOME/.vim/pack/dots/start" "$HOME/.vim/backup" "$HOME/.vim/tmp"
+
+  local d name
+  for d in "$DOTS"/vendor/*; do
+    [ -d "$d" ] || continue
+    name=$(basename "$d")
+    # An un-initialised or gutted submodule holds nothing but its .git
+    # pointer. Linking that into the pack dir just breaks :helptags.
+    if [ -z "$(ls -A "$d" 2>/dev/null | grep -v '^\.git$' | head -1)" ]; then
+      printf 'linkify: %s is empty, skipping (run `make git`)\n' "$name" >&2
+      continue
     fi
-    ln -s $pwd/$dir ~/.vim/bundle/`basename $dir`
+    link "vendor/$name" "$HOME/.vim/pack/dots/start/$name"
   done
 }
 
-##### MAIN #####
-dots
-vim
+prune() {
+  say 'Pruning stale links...'
+  unlink_stale "$HOME/.tmuxrc"              # tmux reads ~/.tmux.conf, never this
+  unlink_stale "$HOME/.zshrc.pre-oh-my-zsh" # oh-my-zsh installer leftover
+  unlink_stale "$HOME/.autotest"
+  unlink_stale "$HOME/.irbrc"
+  unlink_stale "$HOME/.bash_aliases"        # superseded by ~/.shell/aliases.sh
+  # pathogen-era layout
+  if [ -d "$HOME/.vim/bundle" ]; then
+    local b
+    for b in "$HOME"/.vim/bundle/*; do
+      unlink_stale "$b"
+    done
+    run rmdir "$HOME/.vim/bundle" 2>/dev/null || true
+  fi
+  [ -f "$HOME/.vim/autoload/pathogen.vim" ] &&
+    run rm -f "$HOME/.vim/autoload/pathogen.vim"
+  return 0
+}
+
+main() {
+  [ "$DRY_RUN" = 1 ] && say "(dry run -- no changes)"
+  say "repo: $DOTS  profile: $PROFILE"
+  dots
+  ssh_config
+  vim_plugins
+  prune
+  say 'Done.'
+}
+
+main

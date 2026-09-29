@@ -1,0 +1,9 @@
+# macOS-only aliases and functions.
+
+alias screensaver='open -a ScreenSaverEngine'
+alias ss='open -a ScreenSaverEngine'
+alias flush='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+alias o='open'
+
+# Render a man page in Preview.
+pman() { man -t "$@" | open -f -a Preview; }
