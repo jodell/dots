@@ -17,6 +17,10 @@
 # list of available options, their meanings and defaults, please see the
 # ssh_config(5) man page.
 
+# Parsed top-down: this must precede any UseKeychain line, or non-Apple ssh
+# (e.g. a stray Homebrew openssh) errors out before reaching a guard below.
+IgnoreUnknown UseKeychain
+
 Host *.amazonaws.com
   StrictHostKeyChecking no
   UserKnownHostsFile=/dev/null
@@ -27,8 +31,6 @@ Host github.com
   IdentityFile ~/.ssh/id_escher
 
 Host *
-  # macOS-only option; IgnoreUnknown keeps this config portable to Linux.
-  IgnoreUnknown UseKeychain
   UseKeychain yes
   ForwardAgent yes
   SendEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
