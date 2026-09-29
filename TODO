@@ -1,2 +1,6 @@
-git submodules for vim plugins [DONE]
-vim plugin magic --alternative way to avoid .vim dir [DONE: pathogen]
+- consider XDG paths (~/.config/{git,tmux,vim}) for the newer tools
+- `rbenv global 4.0.7` if you want rbenv's ruby rather than brew's as the default
+- move ~/.secrets/elanor-*.private-key.{pem,b64} into 1Password; the .b64 files
+  are duplicates of the .pem ones and can go once stored
+- retrieve the old GPG key from Dropbox (web UI, no app needed) if you still
+  need to decrypt anything encrypted to 7DC14831
