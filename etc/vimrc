@@ -1,25 +1,25 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pathogen needs to be setup first
-"
-filetype off
-call pathogen#helptags()
-call pathogen#runtime_append_all_bundles()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Basic Setup
-
-" Colors
-syntax on
-colors inkpot
-"set term=xterm-color
-set t_Co=256
-set bg=dark
-
-"call pathogen#runtime_append_all_bundles()
-
-filetype plugin indent on " Enable filetype-specific indenting and plugins
-set backspace=indent,eol,start
+"
+" Plugins load from ~/.vim/pack/dots/start (vim 8+ / neovim native packages).
+" No pathogen: it is one more thing to vendor, and every vim you will meet on
+" Mint, Ubuntu, Debian, Pi OS or macOS is >= 8.0.
 set nocompatible
+filetype plugin indent on " Enable filetype-specific indenting and plugins
+syntax on
+
+" Colors. silent! so a missing colorscheme is not a startup error on a box
+" where the plugin tree was never linked (e.g. `linkify --minimal`).
+set bg=dark
+silent! colorscheme inkpot
+
+" Only claim 256 colors when the terminal actually advertises them; forcing
+" t_Co on a basic serial/console TERM produces unreadable colors.
+if $TERM =~# '256color' || has('gui_running')
+  set t_Co=256
+endif
+
+set backspace=indent,eol,start
 set sw=2 sts=2 et ai
 set whichwrap=b,s,h,l
 set wildmenu
@@ -40,9 +40,18 @@ set smartcase
 set cpoptions+=n
 set showbreak=↳\\
 
-" File name, git branch, and line & col position
+" File name, git branch, and line & col position. GitBranch() came from
+" git-vim, which is no longer vendored; fall back to fugitive when present and
+" to nothing at all when it is not, so the statusline never errors.
+function! DotsGitBranch() abort
+  if exists('*FugitiveHead')
+    let l:branch = FugitiveHead()
+    return empty(l:branch) ? '' : ' <' . l:branch . '>'
+  endif
+  return ''
+endfunction
 set laststatus=2
-set statusline=%F\ <%{GitBranch()}>\ %l,%v
+set statusline=%F%{DotsGitBranch()}\ %l,%v
 
 " Strip trailing whitespace upon write
 autocmd BufWritePre *.{m,h,erb,haml,rb,js,coffee,scss,css,yml} call StripTrailingWhiteSpace()
@@ -75,8 +84,8 @@ noremap <Leader>, :!!<CR>
 noremap <Leader>c <C-w>c<CR>
 "noremap <Leader>a :<Leader>A<CR>
 noremap <leader>s :set list!<CR>
-noremap <leader>m :!markdown < %:p > /tmp/`basename %`.html; open file:///tmp/`basename %`.html<CR>
-noremap <leader>g :FuzzyFinderFile<CR>
+noremap <leader>m :execute '!markdown < ' . shellescape(expand('%:p')) . ' > /tmp/preview.html && ' . (has('mac') ? 'open' : 'xdg-open') . ' /tmp/preview.html'<CR>
+noremap <leader>g :CtrlP<CR>
 map <F5> :%s/<\([^>]\)*>/\r&\r/g<enter>:g/^$/d<enter>vat=
 map <F8> vatJxvito<right><left>x
 map <F7> /\v^\s*([a-zA-Z\-0-9\$])<enter>qm<F6>nq@q1000@@:1<enter>
@@ -88,10 +97,9 @@ nnoremap <leader>p :call StripTrailingWhiteSpace()<CR>
 " Run the cucumber scenario under the cursor <3
 noremap <Leader>f :execute "!bundle exec cucumber --format pretty %:".line('.')<CR>
 
-" NERd Tree
-noremap <Leader>t :execute 'NERDTreeToggle'<CR> 
-autocmd VimEnter * NERDTree
-autocmd VimEnter * wincmd p
+" NERDTree, only if it was actually linked in.
+noremap <Leader>t :NERDTreeToggle<CR>
+autocmd VimEnter * if exists(':NERDTree') == 2 | NERDTree | wincmd p | endif
 
 " Tags
 set tags=tags;$HOME
@@ -112,8 +120,12 @@ map  <C-n> :tabnew<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Filetypes - Move Me
-" Load matchit (% to bounce from do to end, etc.)
-runtime! macros/matchit.vim
+" Load matchit (% to bounce from do to end, etc.). Ships with vim itself.
+if has('packages')
+  packadd! matchit
+else
+  runtime! macros/matchit.vim
+endif
 
 augroup myfiletypes
   " Clear old autocmds in group
@@ -190,13 +202,19 @@ au BufWinEnter * silent! loadview
 "  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 "endif
 
-" gist-vim
-let g:gist_clip_command = 'pbcopy'
+" gist-vim. The clipboard command differs per platform; ~/.shell/aliases.linux
+" defines a pbcopy shim, but vim shells out non-interactively and never sees
+" aliases, so pick the real binary here.
+if has('mac')
+  let g:gist_clip_command = 'pbcopy'
+elseif executable('xclip')
+  let g:gist_clip_command = 'xclip -selection clipboard'
+elseif executable('xsel')
+  let g:gist_clip_command = 'xsel --clipboard --input'
+endif
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
 let g:github_token = $GITHUB_TOKEN
-
-let g:SuperTabDefaultCompletionType = "context"
 
 " ctrl-p
 let g:ctrlp_map = '<c-p>'
@@ -207,25 +225,7 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
-if has("gui")
-  set go=-T " Remove toolbar
-  set go+=c
-  set gfn=Monaco:h12
-  set visualbell
-
-  if &background == "dark"
-    hi normal guibg=black
-  endif
-
-  colors koehler
-
-  set mousehide " Hide the mouse when typing text
-
-  " Include user's local vim config
-  if filereadable(expand("~/.gvimrc.local"))
-    source ~/.gvimrc.local
-  endif
-endif
+" GUI settings live in ~/.gvimrc, which gvim/MacVim sources automatically.
 
 " Match trailing whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
