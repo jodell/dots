@@ -100,3 +100,9 @@
 [submodule "vendor/swift.vim"]
 	path = vendor/swift.vim
 	url = https://github.com/keith/swift.vim
+[submodule "vendor/kotlin-vim"]
+	path = vendor/kotlin-vim
+	url = https://github.com/udalov/kotlin-vim.git
+[submodule "vendor/vim-gradle"]
+	path = vendor/vim-gradle
+	url = https://github.com/tfnico/vim-gradle.git
